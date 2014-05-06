@@ -27,4 +27,6 @@ proguard/
 .settings/
 
 *.jar
+.project
+proguard*
 
