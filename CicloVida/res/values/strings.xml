@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">CicloVida</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_b">ActivityB</string>
+    <string name="title_activity_activity_c">ActivityC</string>
+    
+    
+    <string name="A">A</string>
+    <string name="B">B</string>
+    <string name="C">C</string>
+    <string name="Cerrar">Cerrar</string>
+    
+    <string name="actA">Actividad A</string>
+    <string name="actB">Actividad B</string>
+    <string name="actC">Actividad C</string>
+
+</resources>
