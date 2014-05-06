@@ -25,3 +25,6 @@ proguard/
 # Eclipse
 .metadata/
 .settings/
+
+*.jar
+
