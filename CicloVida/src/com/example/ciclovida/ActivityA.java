@@ -45,7 +45,12 @@ public class ActivityA extends Activity {
 		Button botonCerrar = (Button) findViewById(R.id.button3); //Definimos el boton
        
 		
-		
+		botonB.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+            	Log.d("Act A", "Se ha pulsado el boton B");
+            }
+        });
 		
 	}
 	
@@ -151,6 +156,16 @@ public class ActivityA extends Activity {
 	     
 	     Log.d("Act A", "onDestroy");
 	     
+	}
+	
+	
+	
+	
+	protected void onRestoreInstanceState (Bundle savedInstanceState){
+		
+			super.onRestoreInstanceState(savedInstanceState);
+		
+		 Log.d("Act A", "onRestoreInstanceState");
 	}
 	
 
