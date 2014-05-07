@@ -30,6 +30,10 @@
             android:name="com.maialen.pruebainterfaces.LinearMen"
             android:label="@string/title_activity_linear_men" >
         </activity>
+        <activity
+            android:name="com.maialen.pruebainterfaces.RelativeMen"
+            android:label="@string/title_activity_relative_men" >
+        </activity>
     </application>
 
 </manifest>
