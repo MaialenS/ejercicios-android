@@ -57,6 +57,8 @@ public class MainActivity extends Activity {
 		String op = btn.getText().toString();
 		Log.d("cal", "operador "+op);
 		
+		String pan= this.calculos.operador(op);
+		this.pantalla.setText(pan);
 	}
 
 	public void addNumero(View v){

@@ -1,17 +1,20 @@
 package com.maialen.calculadora;
 
+import android.util.Log;
+
 public class Calculos {
 	
 	private String numero1;
 	private String numero2;
-	private Boolean primerNumero;
+	private String operando;
+	
 	private Boolean punto;
 	
 	public Calculos(){
-		this.numero1="";
-		this.numero2="";
-		this.primerNumero=true;
+		this.numero1="0";
+		this.numero2="0";
 		this.punto=false;
+		this.operando="+";
 	}
 	
 	public String addNumero(String num){
@@ -22,16 +25,43 @@ public class Calculos {
 			this.punto=true;
 		}
 		
-		if(this.primerNumero){
-			this.numero1+=num;
-			return this.numero1;
-		}else{
-			this.numero2+=num;
-			return this.numero2;
-		}
+		this.numero1+=num;
+		return this.numero1;
+		
 	}
 
 	
+	public String operador(String op){
+		String res="";
+		
+		double num1= Double.parseDouble(this.numero1);
+		double num2= Double.parseDouble(this.numero2);
+		double numCal;
+		//comprobar si se ha pulsado =
+		numCal=operar(num1, num2, this.operando);
+		if(!op.equals("=")){
+			this.operando=op;
+		}
+		this.numero2=String.valueOf(numCal);
+		this.numero1="0";
+		return this.numero2;
+	}
 	
+	private double operar(double num1, double num2, String op){
+		Log.d("cal", "numero1 "+num1);
+		Log.d("cal", "numero2 "+num2);
+		Log.d("cal", "op "+op);
+		double res=0.0;
+		if(op.equals("+")){
+			res=num1+num2;
+		}else if(op.equals("-")){
+			res=num1-num2;
+		}else if(op.equals("*")){
+			res=num1*num2;
+		}else if(op.equals("/")){
+			res=num1/num2;
+		}
+		return res;
+	}
 	
 }
