@@ -51,6 +51,7 @@ public class Calculos {
 		Log.d("cal", "numero1 "+num1);
 		Log.d("cal", "numero2 "+num2);
 		Log.d("cal", "op "+op);
+		Log.d("cal", "desde casa ");
 		double res=0.0;
 		if(op.equals("+")){
 			res=num1+num2;
