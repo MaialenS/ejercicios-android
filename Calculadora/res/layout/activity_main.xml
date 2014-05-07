@@ -8,7 +8,7 @@
     tools:ignore="MergeRootFrame" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/pantalla"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="10"
@@ -27,7 +27,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/del" />
+            android:text="@string/del" 
+            android:onClick="operar"/>
 
         <Button
             android:id="@+id/delete"
@@ -35,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/delete" />
+            android:text="@string/delete" 
+            android:onClick="operar"/>
 
     </LinearLayout>
     <LinearLayout
@@ -49,7 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num7" />
+            android:text="@string/num7" 
+            android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/num8"
@@ -57,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num8" />
+            android:text="@string/num8" 
+            android:onClick="addNumero"/>
         
         <Button
             android:id="@+id/num9"
@@ -65,7 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num9" />
+            android:text="@string/num9" 
+            android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/op_div"
@@ -73,7 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/op_div" />
+            android:text="@string/op_div" 
+			android:onClick="operar"/>
 
     </LinearLayout>
     
@@ -88,7 +94,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num4" />
+            android:text="@string/num4" 
+			android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/num5"
@@ -96,7 +103,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num5" />
+            android:text="@string/num5" 
+            android:onClick="addNumero"/>
         
         <Button
             android:id="@+id/num6"
@@ -104,7 +112,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num6" />
+            android:text="@string/num6" 
+            android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/op_mul"
@@ -112,7 +121,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/op_mul" />
+            android:text="@string/op_mul" 
+			android:onClick="operar"/>
 
     </LinearLayout>
     
@@ -127,7 +137,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num1" />
+            android:text="@string/num1" 
+            android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/num2"
@@ -135,7 +146,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num2" />
+            android:text="@string/num2" 
+            android:onClick="addNumero"/>
         
         <Button
             android:id="@+id/num3"
@@ -143,7 +155,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num3" />
+            android:text="@string/num3" 
+            android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/op_resta"
@@ -151,7 +164,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/op_resta" />
+            android:text="@string/op_resta" 
+			android:onClick="operar"/>
 
     </LinearLayout>
     
@@ -166,7 +180,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/op_punto" />
+            android:text="@string/op_punto" 
+			android:onClick="addNumero"/>
 
         <Button
             android:id="@+id/num0"
@@ -174,7 +189,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/num0" />
+            android:text="@string/num0" 
+            android:onClick="addNumero"/>
         
         <Button
             android:id="@+id/op_calcular"
@@ -182,7 +198,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/igual" />
+            android:text="@string/igual" 
+            android:onClick="operar"/>
 
         <Button
             android:id="@+id/op_suma"
@@ -190,7 +207,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="@string/op_suma" />
+            android:text="@string/op_suma" 
+			android:onClick="operar"/>
 
     </LinearLayout>
 
