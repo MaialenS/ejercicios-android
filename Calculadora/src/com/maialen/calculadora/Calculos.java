@@ -4,11 +4,15 @@ import android.util.Log;
 
 public class Calculos {
 	
-	private String numero1;
-	private String numero2;
-	private String operando;
+	static final String STATE_NUM1 = "estadoNum1";
+	static final String STATE_NUM2 = "estadoNum2";
+	static final String STATE_OPERANDO = "estadoOperando";
+	static final String STATE_PUNTO = "estadoPunto";
 	
-	private Boolean punto;
+	public String numero1;
+	public String numero2;
+	public String operando;
+	public Boolean punto;
 	
 	public Calculos(){
 		this.numero1="0";
@@ -32,7 +36,8 @@ public class Calculos {
 
 	
 	public String operador(String op){
-		String res="";
+		Log.d("cal", "operar-cal");
+		this.punto=false;
 		
 		double num1= Double.parseDouble(this.numero1);
 		double num2= Double.parseDouble(this.numero2);
@@ -41,26 +46,39 @@ public class Calculos {
 		numCal=operar(num1, num2, this.operando);
 		if(!op.equals("=")){
 			this.operando=op;
+		}else{
+			this.operando="+";
 		}
 		this.numero2=String.valueOf(numCal);
 		this.numero1="0";
 		return this.numero2;
 	}
 	
+	public String borrar(String op){
+		Log.d("cal", "borrar-cal");
+		this.punto=false;
+		if(op.equals("delete")){
+			this.numero2="0";
+			this.operando="+";
+		}
+		
+		this.numero1="0";
+		
+		return this.numero1;
+	}
+	
+	
 	private double operar(double num1, double num2, String op){
-		Log.d("cal", "numero1 "+num1);
-		Log.d("cal", "numero2 "+num2);
-		Log.d("cal", "op "+op);
-		Log.d("cal", "desde casa ");
+
 		double res=0.0;
 		if(op.equals("+")){
-			res=num1+num2;
+			res=num2+num1;
 		}else if(op.equals("-")){
-			res=num1-num2;
+			res=num2-num1;
 		}else if(op.equals("*")){
-			res=num1*num2;
+			res=num2*num1;
 		}else if(op.equals("/")){
-			res=num1/num2;
+			res=num2/num1;
 		}
 		return res;
 	}

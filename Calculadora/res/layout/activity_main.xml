@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/del" 
-            android:onClick="operar"/>
+            android:onClick="borrar"/>
 
         <Button
             android:id="@+id/delete"
@@ -37,7 +37,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/delete" 
-            android:onClick="operar"/>
+            android:onClick="borrar"/>
 
     </LinearLayout>
     <LinearLayout
