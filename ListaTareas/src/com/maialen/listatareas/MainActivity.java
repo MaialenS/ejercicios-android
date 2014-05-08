@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +19,11 @@ import android.os.Build;
 
 public class MainActivity extends Activity {
 
+	static final String STATE_LISTADI = "estadoListado";
+	
+	
 	private ArrayList<String> listado;	
-	private ArrayAdapter adapter;
+	private ArrayAdapter<String> adapter;
 	
 	private EditText txtNuevaTarea;
 	private ListView listaTareas;
@@ -34,7 +38,7 @@ public class MainActivity extends Activity {
 		//contexto: entorno en el que se ejecuta
 		//el tipo de layout a rellenar
 		//datos para rellenar
-		this.adapter= new ArrayAdapter(this, android.R.layout.simple_list_item_1, this.listado);
+		this.adapter= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, this.listado);
 		
 		this.txtNuevaTarea = (EditText) findViewById(R.id.tareaNueva);
 		this.listaTareas = (ListView) findViewById(R.id.listaTareas);
@@ -76,6 +80,36 @@ public class MainActivity extends Activity {
 		
 	}
 	
-	
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		// salvar el estado
+		Log.d("cal", "salvar el estado ");
 
+		savedInstanceState.putStringArrayList(STATE_LISTADI, this.listado);
+	
+		// Always call the superclass so it can save the view hierarchy state
+		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		Log.d("cal", "restaurar el estado " );
+		// Always call the superclass so it can restore the view hierarchy
+		super.onRestoreInstanceState(savedInstanceState);
+
+		//this.listado = savedInstanceState.getStringArrayList(STATE_LISTADI);
+		//si se pone directamente no funciona
+		this.listado.addAll(savedInstanceState.getStringArrayList(STATE_LISTADI));
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		this.adapter.notifyDataSetChanged();
+	}
+	
+	
+	
 }
