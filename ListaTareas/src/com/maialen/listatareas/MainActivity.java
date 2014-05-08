@@ -7,10 +7,12 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnKeyListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -44,7 +46,24 @@ public class MainActivity extends Activity {
 		this.listaTareas = (ListView) findViewById(R.id.listaTareas);
 		//decirle a la lista cual es su adaptador
 		this.listaTareas.setAdapter(this.adapter);
-
+		
+		this.txtNuevaTarea.setOnKeyListener(new OnKeyListener() {
+			
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				if(event.getAction()==KeyEvent.ACTION_DOWN){
+					if(event.getAction()==KeyEvent.KEYCODE_DPAD_CENTER || event.getAction()==KeyEvent.KEYCODE_ENTER ){
+						
+						anadir();
+						
+					}
+					return false;
+				}
+				return false;
+			}
+		});
+		
 	}
 
 	@Override
@@ -68,16 +87,18 @@ public class MainActivity extends Activity {
 	}
 
 	public void anadir(View v){
-		
+		this.anadir();
+	}
+	
+	public void anadir(){
 		String men= String.valueOf( this.txtNuevaTarea.getText());
 		
 		if(men.length()>0){
-			this.listado.add(men);
+			this.listado.add(0, men);
 		}
 		this.txtNuevaTarea.setText("");
 		
 		this.adapter.notifyDataSetChanged();
-		
 	}
 	
 	@Override
@@ -109,6 +130,7 @@ public class MainActivity extends Activity {
 		
 		this.adapter.notifyDataSetChanged();
 	}
+	
 	
 	
 	
