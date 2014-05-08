@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#ffff0000</color>
+    <color name="gris">#424242</color>
+    <color name="blanco">#FFF</color>
+    <color name="boton_numero">#D8D8D8</color>
+    <color name="boton_operador">#A4A4A4</color>
+</resources>

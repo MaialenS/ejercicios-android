@@ -6,17 +6,20 @@ public class Calculos {
 	
 	static final String STATE_NUM1 = "estadoNum1";
 	static final String STATE_NUM2 = "estadoNum2";
+	static final String STATE_NUM_MOSTRAR = "estadoNumMostrar";
 	static final String STATE_OPERANDO = "estadoOperando";
 	static final String STATE_PUNTO = "estadoPunto";
 	
 	public String numero1;
 	public String numero2;
+	public String mostrando;
 	public String operando;
 	public Boolean punto;
 	
 	public Calculos(){
 		this.numero1="0";
 		this.numero2="0";
+		this.mostrando=this.numero1;
 		this.punto=false;
 		this.operando="+";
 	}
@@ -30,7 +33,8 @@ public class Calculos {
 		}
 		
 		this.numero1+=num;
-		return this.numero1;
+		this.mostrando=this.numero1;
+		return this.mostrando;
 		
 	}
 
@@ -51,7 +55,8 @@ public class Calculos {
 		}
 		this.numero2=String.valueOf(numCal);
 		this.numero1="0";
-		return this.numero2;
+		this.mostrando=this.numero2;
+		return this.mostrando;
 	}
 	
 	public String borrar(String op){
@@ -63,7 +68,7 @@ public class Calculos {
 		}
 		
 		this.numero1="0";
-		
+		this.mostrando=this.numero1;
 		return this.numero1;
 	}
 	

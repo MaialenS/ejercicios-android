@@ -1,7 +1,5 @@
 package com.maialen.calculadora;
 
-
-
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -17,101 +15,94 @@ import android.widget.TextView;
 import android.os.Build;
 
 public class MainActivity extends Activity {
-	
+
 	Calculos calculos;
 	TextView pantalla;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		 this.pantalla = (TextView) findViewById(R.id.pantalla); 
-		this.calculos= new Calculos();
 		
+		this.pantalla = (TextView) findViewById(R.id.pantalla);
+		this.calculos = new Calculos();
+
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		// salvar el estado
+		Log.d("cal", "salvar el estado " + savedInstanceState);
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+		savedInstanceState.putString(this.calculos.STATE_NUM1,
+				this.calculos.numero1);
+		savedInstanceState.putString(this.calculos.STATE_NUM2,
+				this.calculos.numero2);
+		savedInstanceState.putString(this.calculos.STATE_NUM_MOSTRAR,
+				this.calculos.mostrando);
+		savedInstanceState.putString(this.calculos.STATE_OPERANDO,
+				this.calculos.operando);
+		savedInstanceState.putBoolean(this.calculos.STATE_PUNTO,
+				this.calculos.punto);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	@Override
-	protected void onSaveInstanceState (Bundle savedInstanceState){
-	//salvar el estado
-		Log.d("cal", "salvar el estado "+savedInstanceState);
-		
-		savedInstanceState.putString(this.calculos.STATE_NUM1, this.calculos.numero1);
-		savedInstanceState.putString(this.calculos.STATE_NUM2, this.calculos.numero2);
-		savedInstanceState.putString(this.calculos.STATE_OPERANDO, this.calculos.operando);
-		savedInstanceState.putBoolean(this.calculos.STATE_PUNTO, this.calculos.punto);
-		
 		// Always call the superclass so it can save the view hierarchy state
-	    super.onSaveInstanceState(savedInstanceState);
+		super.onSaveInstanceState(savedInstanceState);
 	}
-	
+
 	@Override
 	public void onRestoreInstanceState(Bundle savedInstanceState) {
-		Log.d("cal", "restaurar el estado "+savedInstanceState);
-	    // Always call the superclass so it can restore the view hierarchy
-	    super.onRestoreInstanceState(savedInstanceState);
-	    
-	    this.calculos.numero1=savedInstanceState.getString(this.calculos.STATE_NUM1);
-	    this.calculos.numero2=savedInstanceState.getString(this.calculos.STATE_NUM2);
-	    this.calculos.operando=savedInstanceState.getString(this.calculos.STATE_OPERANDO);
-	    this.calculos.punto=savedInstanceState.getBoolean(this.calculos.STATE_PUNTO);
-	    
+		Log.d("cal", "restaurar el estado " + savedInstanceState);
+		// Always call the superclass so it can restore the view hierarchy
+		super.onRestoreInstanceState(savedInstanceState);
+
+		this.calculos.numero1 = savedInstanceState
+				.getString(this.calculos.STATE_NUM1);
+		this.calculos.numero2 = savedInstanceState
+				.getString(this.calculos.STATE_NUM2);
+		this.calculos.mostrando = savedInstanceState
+				.getString(this.calculos.STATE_NUM_MOSTRAR);
+		this.calculos.operando = savedInstanceState
+				.getString(this.calculos.STATE_OPERANDO);
+		this.calculos.punto = savedInstanceState
+				.getBoolean(this.calculos.STATE_PUNTO);
+
 	}
-	
-	@Override	
-	protected void onResume (){
+
+	@Override
+	protected void onResume() {
 		super.onResume();
-		String pan= this.calculos.numero1;
-		this.pantalla.setText(pan);
-	}
-	
-	
-	//funciones de interaccion con la activity 
-	
-	public void operar(View v){
-		Log.d("cal", "operar");
-		Button btn = (Button)v;
-		String op = btn.getText().toString();
-		Log.d("cal", "operador "+op);
-		
-		String pan= this.calculos.operador(op);
+		String pan = this.calculos.mostrando;
 		this.pantalla.setText(pan);
 	}
 
-	public void addNumero(View v){
-		Button btn = (Button)v;
-		String num = btn.getText().toString();
-		Log.d("cal", "numero "+num);
-		String pan= this.calculos.addNumero(num);
-		this.pantalla.setText(pan);
-		
-	}
-	
-	public void borrar(View v){
-		Log.d("cal", "borrar");
-		Button btn = (Button)v;
+	// funciones de interaccion con la activity
+
+	public void operar(View v) {
+		Log.d("cal", "operar");
+		Button btn = (Button) v;
 		String op = btn.getText().toString();
-		
-		String pan= this.calculos.borrar(op);
+		Log.d("cal", "operador " + op);
+
+		String pan = this.calculos.operador(op);
 		this.pantalla.setText(pan);
-		
+	}
+
+	public void addNumero(View v) {
+		Button btn = (Button) v;
+		String num = btn.getText().toString();
+		Log.d("cal", "numero " + num);
+		String pan = this.calculos.addNumero(num);
+		this.pantalla.setText(pan);
+
+	}
+
+	public void borrar(View v) {
+		Log.d("cal", "borrar");
+		Button btn = (Button) v;
+		String op = btn.getText().toString();
+
+		String pan = this.calculos.borrar(op);
+		this.pantalla.setText(pan);
+
 	}
 }
