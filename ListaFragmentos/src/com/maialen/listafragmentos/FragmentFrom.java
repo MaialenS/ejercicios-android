@@ -23,6 +23,8 @@ public class FragmentFrom extends Fragment {
 	private EditText txtNuevaTarea;
 	private Button boton;
 	
+	//para obligar al activity que te llama a implementar un metodo concreto se define una interfaz
+	//que lo contenga y se comprueba que es implementa la interfaz
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
