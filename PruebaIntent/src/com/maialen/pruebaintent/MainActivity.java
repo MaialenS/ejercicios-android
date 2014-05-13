@@ -3,6 +3,10 @@ package com.maialen.pruebaintent;
 
 
 
+import java.io.File;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -13,6 +17,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +38,10 @@ import android.content.ContentResolver;
 
 public class MainActivity extends Activity {
 	
+	private static final String TEXTO_MOSTRAR="texto_mostrar";
+	private static final String IMAGEN_MOSTRAR="imagen_mostrar";
+	private static final String CONTACTO_MOSTRAR="contacto_mostrar";
+	
 	public static final int SHOW_FORM= 1;
 	public static final String SHOW_FORM_TEXT="texto";
 	
@@ -41,6 +50,9 @@ public class MainActivity extends Activity {
 	
 	public static final int SHOW_CONTACT= 3;
 	private Button btnForm, btnCamara, btnContact;
+	
+	public static final int MEDIA_TYPE_IMAGE = 1;
+	
 	private EditText textEntrada;
 	private TextView textSalida, contacto;
 	private ImageView imagen;
@@ -66,8 +78,14 @@ public class MainActivity extends Activity {
 			  
 			  
 			    // create Intent to take a picture and return control to the calling application
-			    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+			  	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+			 //   fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+			 //   intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
+			  
+			  
+			  
 			    // hacer el intent si alguien puede
 			    if (intent.resolveActivity(getPackageManager()) != null) {
 			        startActivityForResult(intent, SHOW_CAMARA);
@@ -137,7 +155,7 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	@SuppressWarnings("deprecation")
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 	    // Check which request we're responding to
@@ -208,6 +226,72 @@ public class MainActivity extends Activity {
 	        }
 	    }
 	    
+	}
+	
+	
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		// salvar el estado
+		Log.d("cal", "salvar el estado " + savedInstanceState);
+
+		savedInstanceState.putString(TEXTO_MOSTRAR,
+				this.textSalida.getText().toString());
+		savedInstanceState.putString(CONTACTO_MOSTRAR,
+				this.contacto.getText().toString());
+		
+		
+		// Always call the superclass so it can save the view hierarchy state
+		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		Log.d("cal", "restaurar el estado " + savedInstanceState);
+		// Always call the superclass so it can restore the view hierarchy
+		super.onRestoreInstanceState(savedInstanceState);
+
+	//	this.calculos.numero1 = savedInstanceState.getString(this.calculos.STATE_NUM1);
+		this.textSalida.setText(savedInstanceState.getString(TEXTO_MOSTRAR));
+		this.contacto.setText(savedInstanceState.getString(CONTACTO_MOSTRAR));
+		
+		
+
+	}
+	
+	/** Create a file Uri for saving an image or video */
+	private static Uri getOutputMediaFileUri(int type){
+	      return Uri.fromFile(getOutputMediaFile(type));
+	}
+
+	/** Create a File for saving an image or video */
+	private static File getOutputMediaFile(int type){
+	    // To be safe, you should check that the SDCard is mounted
+	    // using Environment.getExternalStorageState() before doing this.
+
+	    File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+	              Environment.DIRECTORY_PICTURES), "MyCameraApp");
+	    // This location works best if you want the created images to be shared
+	    // between applications and persist after your app has been uninstalled.
+
+	    // Create the storage directory if it does not exist
+	    if (! mediaStorageDir.exists()){
+	        if (! mediaStorageDir.mkdirs()){
+	            Log.d("MyCameraApp", "failed to create directory");
+	            return null;
+	        }
+	    }
+
+	    // Create a media file name
+	   
+	    File mediaFile;
+	    if (type == MEDIA_TYPE_IMAGE){
+	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
+	        "IMG_"+ 1 + ".jpg");
+	    } else {
+	        return null;
+	    }
+
+	    return mediaFile;
 	}
 	
 	
