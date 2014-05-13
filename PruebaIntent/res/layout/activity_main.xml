@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.maialen.pruebaintent.MainActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <EditText
+        android:id="@+id/textEntrada1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/introduce_texto" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textSalida1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sin_texto"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/contacto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btnFormulario"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/form" />
+
+        <Button
+            android:id="@+id/btnCamara"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/camara" />
+
+        <Button
+            android:id="@+id/btnContacto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/Contacto" />
+
+    </LinearLayout>
+
+</LinearLayout>

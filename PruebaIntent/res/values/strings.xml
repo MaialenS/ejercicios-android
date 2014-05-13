@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PruebaIntent</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_activity_nueva">ActivityNueva</string>
+    
+    <string name="introduce_texto">introduce un texto</string>
+    <string name="sin_texto">---</string>
+    <string name="form">Form</string>
+    <string name="camara">Camara</string>
+	<string name="Contacto">Contacto</string>
+	
+	<string name="ok">OK</string>
+	<string name="back">Back</string>
+    
+</resources>
