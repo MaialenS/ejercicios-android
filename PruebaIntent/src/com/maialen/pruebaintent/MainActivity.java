@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -175,11 +176,38 @@ public class MainActivity extends Activity {
 	        this.textSalida.setText(datoDevuelto);
 	    }
 	}
+	
+	private Bitmap getResizedBitmap(Bitmap bm, int newHeight, int newWidth) {
+	    int width = bm.getWidth();
+	    int height = bm.getHeight();
+	    float scaleWidth = ((float) newWidth) / width;
+	    float scaleHeight = ((float) newHeight) / height;
+	    
+	    //para mantener las proporciones
+	    float max= Math.max(scaleWidth, scaleHeight);
+	    // CREATE A MATRIX FOR THE MANIPULATION
+	    Matrix matrix = new Matrix();
+	    // RESIZE THE BIT MAP
+	    matrix.postScale(max, max);
+
+	    // "RECREATE" THE NEW BITMAP
+	    Bitmap resizedBitmap = Bitmap.createBitmap(bm, 0, 0, width, height, matrix, false);
+	    return resizedBitmap;
+	}
+	
 	private void ponerImagen(){
 		
+		// Get the dimensions of the View
+	    int targetW = imagen.getWidth();
+	    int targetH = imagen.getHeight();
+		
+	 // Get the dimensions of the bitmap
+	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+	    bmOptions.inJustDecodeBounds = true;
+	    
 		try {
 			Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
-			this.imagen.setImageBitmap(imageBitmap);
+			this.imagen.setImageBitmap(getResizedBitmap(imageBitmap,targetH,targetW));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -274,7 +302,6 @@ public class MainActivity extends Activity {
 	    } else {
 	        return null;
 	    }
-
 	    return mediaFile;
 	}
 }
