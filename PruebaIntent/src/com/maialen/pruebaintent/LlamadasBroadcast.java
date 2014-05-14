@@ -30,13 +30,11 @@ public class LlamadasBroadcast extends BroadcastReceiver{
 		}else if (action.equals("android.intent.action.AIRPLANE_MODE")){
 			tratarAirPlane(intent.getExtras());
 			
+		}else if(action.equals("android.net.conn.CONNECTIVITY_CHANGE")){
+			tratarCambioConexion(intent.getExtras());
+			
 		}else if(action.equals("android.intent.action.SERVICE_STATE")){
 			tratarCambioEstado(intent.getExtras());
-			
-		}
-		
-		else if(action.equals("android.net.conn.CONNECTIVITY_CHANGE")){
-			tratarCambioConexion(intent.getExtras());
 			
 		}
 		
@@ -85,13 +83,15 @@ public class LlamadasBroadcast extends BroadcastReceiver{
 	private void tratarCambioConexion(Bundle extras){
 		
 		Log.w("ACT", "cambio de conexion");
-		
+		Log.w("ACT", "airplane "+Settings.Global.AIRPLANE_MODE_ON);
 		
 	}
 	
 	private void tratarAirPlane(Bundle extras){
-		//Log.w("ACT", "airplane "+Settings.Global.AIRPLANE_MODE_ON);
+		Log.w("ACT", "airplane "+Settings.Global.AIRPLANE_MODE_ON);
 		Log.w("ACT", "airplane ");
+		
+		
 		
 		
 	}

@@ -38,9 +38,10 @@
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE"/>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="android.intent.action.SERVICE_STATE"/>
                 <action android:name="android.intent.action.AIRPLANE_MODE"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                
                 
                 
             </intent-filter>
