@@ -4,6 +4,8 @@ package com.maialen.pruebaintent;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -15,6 +17,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -59,14 +62,13 @@ public class MainActivity extends Activity {
 
 	private SimpleCursorAdapter dataAdapter;
 	
+
 	//cuando se haga click en boton de form
 	View.OnClickListener clickForm = new View.OnClickListener() {
 	    public void onClick(View v) {
 	    	//para poder acceder al this de una clase en una instancia interna  NombreClase.this
-	    	Intent intent= new Intent(MainActivity.this, ActivityNueva.class);
-	    	
+	    	Intent intent= new Intent(MainActivity.this, ActivityNueva.class);	    	
 	    	//pasar los datos al intent
-	    	
 	    	intent.putExtra(SHOW_FORM_TEXT, textEntrada.getText().toString());
 	    	startActivityForResult(intent, SHOW_FORM);
 	   	}
@@ -74,40 +76,25 @@ public class MainActivity extends Activity {
 	  
 	//cuando se haga click en boton de Camara
 	View.OnClickListener clickCamara = new View.OnClickListener() {
-		  public void onClick(View v) {
-			  
-			  
+		  public void onClick(View v) {  
 			    // create Intent to take a picture and return control to the calling application
-
 			  	Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-			 //   fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
-			 //   intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
-			  
-			  
-			  
+			    fileUri = getOutputMediaFileUri(MEDIA_TYPE_IMAGE); // create a file to save the image
+			    intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file name
 			    // hacer el intent si alguien puede
 			    if (intent.resolveActivity(getPackageManager()) != null) {
 			        startActivityForResult(intent, SHOW_CAMARA);
-			    }
-			  
-		    	
+			    }  	
 	    }
 	};
 		
 	//cuando se haga click en boton de Contacto
 		View.OnClickListener clickContacto = new View.OnClickListener() {
-			  public void onClick(View v) {
-			      
+			  public void onClick(View v) {			      
 				 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-				  
-
-			        startActivityForResult(intent, SHOW_CONTACT);
-			        
-				  //fetchContacts();
-			    	
+			        startActivityForResult(intent, SHOW_CONTACT);	        
 			  }
-	};
+		};
 		  
 	
 
@@ -129,15 +116,11 @@ public class MainActivity extends Activity {
 		this.contacto = (TextView) findViewById(R.id.contacto);
 		
 		this.imagen= (ImageView) findViewById(R.id.imagen);
-		
-		
 
-		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
@@ -155,91 +138,90 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    // Check which request we're responding to
+	    // mirar a que aplicacion corresponde el "request", el codigo de que actividad
 	    if (requestCode == SHOW_FORM) {
 	        // Make sure the request was successful
 	    	 Log.d("ACT", "ha vuelto dato de form");
 	        if (resultCode == RESULT_OK) {
-	        	Log.d("ACT", "RESULT_OK");
-	        	//data.getData()
-	        	String datoDevuelto=data.getDataString();
-	    		
-	    	    if (datoDevuelto != null) {
-	    	        this.textSalida.setText(datoDevuelto);
-	    	    }
-	            
+	        	tratarForm(data);
 	        }else{
 	        	Log.d("ACT", "No OK");
-	        	
 	        }
 	    }else if (requestCode == SHOW_CAMARA) {
 	        // Make sure the request was successful
 	        if (resultCode == RESULT_OK) {
+	        	Log.d("ACT", "Camara OK");
+	        	//Bundle extras = data.getExtras();
+	            //Bitmap imageBitmap = (Bitmap) extras.get("data");
+	        	//this.imagen.setImageBitmap(imageBitmap);
 	        	
-	        	Bundle extras = data.getExtras();
-	            Bitmap imageBitmap = (Bitmap) extras.get("data");
-	            this.imagen.setImageBitmap(imageBitmap);
+	        	ponerImagen();
 	        }
 	    }else if (requestCode == SHOW_CONTACT) {
 	        // Make sure the request was successful
 	        if (resultCode == RESULT_OK) {
-	        	
-	        	Uri contactData = data.getData();
-	            Cursor c =  getContentResolver().query(contactData, null, null, null, null);
-	            
-	            if(c.moveToFirst()){
-	            	
-	            	String name=c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-	            	
-	            	
-	            	this.contacto.setText(name);
-
-	            	
-	            	
-	            	
-	            }
-	            
-	            
-	            
-	            
-	            
-	            /*
-	         // For the cursor adapter, specify which columns go into which views
-	            String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
-	            int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
-
-	            // Create an empty adapter we will use to display the loaded data.
-	            // We pass null for the cursor, then update it in onLoadFinished()
-	            SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(this, 
-	                    android.R.layout.simple_list_item_1, c,
-	                    fromColumns, toViews, 0);
-	           
-	            
-	            this.lista.setAdapter(mAdapter);
-
-	            */
-	        	
-	            
+	        	tratarContacto(data);
 	        }
 	    }
-	    
 	}
 	
+	private void tratarForm(Intent data){
+		Log.d("ACT", "RESULT_OK");
+    	//data.getData()
+    	String datoDevuelto=data.getDataString();  		
+	    if (datoDevuelto != null) {
+	        this.textSalida.setText(datoDevuelto);
+	    }
+	}
+	private void ponerImagen(){
+		
+		try {
+			Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
+			this.imagen.setImageBitmap(imageBitmap);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private void tratarContacto(Intent data){
+		Uri contactData = data.getData();
+        Cursor c =  getContentResolver().query(contactData, null, null, null, null);      
+        if(c.moveToFirst()){       	
+        	String name=c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+        	this.contacto.setText(name);
+        }
+    
+        /*//adaptador para el cursor y un listView
+     // For the cursor adapter, specify which columns go into which views
+        String[] fromColumns = {ContactsContract.Data.DISPLAY_NAME};
+        int[] toViews = {android.R.id.text1}; // The TextView in simple_list_item_1
+        // Create an empty adapter we will use to display the loaded data.
+        // We pass null for the cursor, then update it in onLoadFinished()
+        SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(this, 
+                android.R.layout.simple_list_item_1, c,
+                fromColumns, toViews, 0);
+
+        this.lista.setAdapter(mAdapter);
+
+        */    
+	}
 	
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
-		// salvar el estado
+		// salvar el estado  IMAGEN_MOSTRAR
 		Log.d("cal", "salvar el estado " + savedInstanceState);
 
 		savedInstanceState.putString(TEXTO_MOSTRAR,
 				this.textSalida.getText().toString());
 		savedInstanceState.putString(CONTACTO_MOSTRAR,
 				this.contacto.getText().toString());
-		
-		
+		savedInstanceState.putString(IMAGEN_MOSTRAR,
+				this.fileUri.toString());
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(savedInstanceState);
 	}
@@ -254,8 +236,9 @@ public class MainActivity extends Activity {
 		this.textSalida.setText(savedInstanceState.getString(TEXTO_MOSTRAR));
 		this.contacto.setText(savedInstanceState.getString(CONTACTO_MOSTRAR));
 		
-		
-
+		String uri =savedInstanceState.getString(IMAGEN_MOSTRAR);
+		this.fileUri= Uri.parse(uri);
+		ponerImagen();
 	}
 	
 	/** Create a file Uri for saving an image or video */
@@ -265,6 +248,8 @@ public class MainActivity extends Activity {
 
 	/** Create a File for saving an image or video */
 	private static File getOutputMediaFile(int type){
+		//codigo de android developer
+		
 	    // To be safe, you should check that the SDCard is mounted
 	    // using Environment.getExternalStorageState() before doing this.
 
@@ -282,7 +267,6 @@ public class MainActivity extends Activity {
 	    }
 
 	    // Create a media file name
-	   
 	    File mediaFile;
 	    if (type == MEDIA_TYPE_IMAGE){
 	        mediaFile = new File(mediaStorageDir.getPath() + File.separator +
@@ -293,7 +277,4 @@ public class MainActivity extends Activity {
 
 	    return mediaFile;
 	}
-	
-	
-
 }

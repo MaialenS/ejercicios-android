@@ -19,6 +19,8 @@ import android.os.Build;
 
 public class ActivityNueva extends Activity {
 	
+	private static final String TEXTO_MOSTRAR="texto_mostrar";
+	
 	private Button btnOK, btnBack;
 	private EditText textEntrada;
 	private TextView textSalida;
@@ -26,13 +28,11 @@ public class ActivityNueva extends Activity {
 	//cuando se haga click en boton de OK
 		View.OnClickListener clickOK = new View.OnClickListener() {
 			public void onClick(View v) {
-				
+				//poner datos en la respuesta cuando es ok
 				Uri selectedHorse = Uri.parse(textEntrada.getText().toString());
-		        Intent result = new Intent(Intent.ACTION_PICK, selectedHorse);
-			    	
-		        setResult(RESULT_OK, result);
-		        finish();
-			    	
+		        Intent result = new Intent(Intent.ACTION_PICK, selectedHorse);	
+		        setResult(Activity.RESULT_OK, result);
+		        finish();    	
 		    }
 		};
 			
@@ -40,13 +40,10 @@ public class ActivityNueva extends Activity {
 		View.OnClickListener clickBack = new View.OnClickListener() {
 			  public void onClick(View v) {
 				  //si se pulsca back no se devuelven datos    
-				  setResult(RESULT_CANCELED);
-				  finish();
-				    	
+				  setResult(Activity.RESULT_CANCELED);
+				  finish(); 	
 			 }
 		};
-	
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,16 +64,17 @@ public class ActivityNueva extends Activity {
 		//obtener los datos pasados por quien lo ha llamado
 		// Get intent, action and MIME type
 	    Intent intent = getIntent();
-	    String action = intent.getAction();
-	    String type = intent.getType();
-	    
-	    String sharedText=intent.getStringExtra(MainActivity.SHOW_FORM_TEXT);
-		
-	    if (sharedText != null) {
-	        Log.d("ACT", sharedText);
-	        this.textSalida.setText(sharedText);
+	    //comprobar si esta por si se ha girado o fallado algo o por si viene de otro lugar
+	    if (intent!=null){
+		    String action = intent.getAction();
+		    String type = intent.getType();
+		    String sharedText=intent.getStringExtra(MainActivity.SHOW_FORM_TEXT);
+			
+		    if (sharedText != null) {
+		        Log.d("ACT", sharedText);
+		        this.textSalida.setText(sharedText);
+		    }
 	    }
-		
 	}
 
 	@Override
@@ -97,6 +95,28 @@ public class ActivityNueva extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		// salvar el estado  IMAGEN_MOSTRAR
+		Log.d("cal", "salvar el estado " + savedInstanceState);
+
+		savedInstanceState.putString(TEXTO_MOSTRAR,
+				this.textSalida.getText().toString());
+		
+		// Always call the superclass so it can save the view hierarchy state
+		super.onSaveInstanceState(savedInstanceState);
+	}
+
+	@Override
+	public void onRestoreInstanceState(Bundle savedInstanceState) {
+		Log.d("cal", "restaurar el estado " + savedInstanceState);
+		// Always call the superclass so it can restore the view hierarchy
+		super.onRestoreInstanceState(savedInstanceState);
+
+		this.textSalida.setText(savedInstanceState.getString(TEXTO_MOSTRAR));	
+
 	}
 
 }
