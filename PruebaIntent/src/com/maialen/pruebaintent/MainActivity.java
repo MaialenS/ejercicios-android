@@ -63,6 +63,8 @@ public class MainActivity extends Activity {
 
 	private SimpleCursorAdapter dataAdapter;
 	
+	private boolean reiniciado=false;
+	
 
 	//cuando se haga click en boton de form
 	View.OnClickListener clickForm = new View.OnClickListener() {
@@ -200,6 +202,9 @@ public class MainActivity extends Activity {
 		// Get the dimensions of the View
 	    int targetW = imagen.getWidth();
 	    int targetH = imagen.getHeight();
+	    
+	    Log.d("ACT", "targetW "+targetW);
+	    Log.d("ACT", "targetH "+targetH);
 		
 	 // Get the dimensions of the bitmap
 	    BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -207,7 +212,9 @@ public class MainActivity extends Activity {
 	    
 		try {
 			Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), fileUri);
-			this.imagen.setImageBitmap(getResizedBitmap(imageBitmap,targetH,targetW));
+			if (imageBitmap!=null){
+				this.imagen.setImageBitmap(getResizedBitmap(imageBitmap,targetH,targetW));
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -248,8 +255,7 @@ public class MainActivity extends Activity {
 				this.textSalida.getText().toString());
 		savedInstanceState.putString(CONTACTO_MOSTRAR,
 				this.contacto.getText().toString());
-		savedInstanceState.putString(IMAGEN_MOSTRAR,
-				this.fileUri.toString());
+		//savedInstanceState.putString(IMAGEN_MOSTRAR,this.fileUri.toString());
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(savedInstanceState);
 	}
@@ -263,10 +269,25 @@ public class MainActivity extends Activity {
 	//	this.calculos.numero1 = savedInstanceState.getString(this.calculos.STATE_NUM1);
 		this.textSalida.setText(savedInstanceState.getString(TEXTO_MOSTRAR));
 		this.contacto.setText(savedInstanceState.getString(CONTACTO_MOSTRAR));
-		
+		/*
 		String uri =savedInstanceState.getString(IMAGEN_MOSTRAR);
 		this.fileUri= Uri.parse(uri);
-		ponerImagen();
+		this.reiniciado=true;
+		*/
+		//ponerImagen();
+	}
+	
+	
+	public void onResume(){
+	     super.onResume();
+	     // Resume any paused UI updates, threads, or processes required
+	     // by the Activity but suspended when it was inactive.
+		if(this.reiniciado){
+			//ponerImagen();
+			
+		}
+	     Log.d("ACT", "onResume");
+	     
 	}
 	
 	/** Create a file Uri for saving an image or video */
