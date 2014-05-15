@@ -255,7 +255,11 @@ public class MainActivity extends Activity {
 				this.textSalida.getText().toString());
 		savedInstanceState.putString(CONTACTO_MOSTRAR,
 				this.contacto.getText().toString());
-		//savedInstanceState.putString(IMAGEN_MOSTRAR,this.fileUri.toString());
+		
+		if(this.fileUri!=null){
+		
+			savedInstanceState.putString(IMAGEN_MOSTRAR,this.fileUri.toString());
+		}
 		// Always call the superclass so it can save the view hierarchy state
 		super.onSaveInstanceState(savedInstanceState);
 	}

@@ -44,12 +44,8 @@
                 
                 
                 
-            </intent-filter>
-            
+            </intent-filter>        
         </receiver>
-        
-        
-        
         
     </application>
 
