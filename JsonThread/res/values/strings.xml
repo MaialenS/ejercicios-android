@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">JsonThread</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="descargar">Descargar</string>
+    <string name="manager">Con manager</string>
+    
+    <string  name="my_feed">http://www.arkaitzgarro.com/android/photos.json</string>
+    
+    <string name="dir_con_manager">http://developer.android.com/shareables/icon_templates-v4.0.zip</string>
+    <string name="nombre_fichero">icon_templates-v4.0.zip</string>
+</resources>
