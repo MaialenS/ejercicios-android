@@ -4,5 +4,16 @@
     <string name="app_name">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="title_activity_settings">SettingsActivity</string>
 
+    <string name="autorefresh">Autorefresh</string>
+    <string name="internal">Internal</string>
+    
+    <string-array name="array_internal">
+		<item>1 min</item>
+		<item>5 min</item>
+		<item>15 min</item>
+	</string-array>
+    
 </resources>

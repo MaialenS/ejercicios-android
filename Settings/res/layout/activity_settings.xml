@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.maialen.settings.SettingsActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <TextView
+        android:id="@+id/textAutorefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/autorefresh"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ToggleButton
+        android:id="@+id/tggAutorefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textAutorefresh"
+        android:layout_alignBottom="@+id/textAutorefresh"
+        android:layout_marginLeft="39dp"
+        android:layout_toRightOf="@+id/textAutorefresh"
+        android:text="ToggleButton" />
+
+    <TextView
+        android:id="@+id/textInternal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textAutorefresh"
+        android:layout_below="@+id/tggAutorefresh"
+        android:layout_marginTop="42dp"
+        android:text="@string/internal"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/textInternal"
+        android:layout_toRightOf="@+id/textAutorefresh" 
+        android:entries="@array/array_internal"
+        />
+
+</RelativeLayout>
