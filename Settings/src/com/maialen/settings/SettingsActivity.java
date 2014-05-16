@@ -17,9 +17,9 @@ import android.os.Build;
 
 public class SettingsActivity extends Activity {
 	
-	private static final String MY_PREFS="Preferencias";
-	private static final String AUTOREFRESH="autorefresh";
-	private static final String INTERVALO="intervalo";
+	public static final String MY_PREFS="Preferencias";
+	public static final String AUTOREFRESH="autorefresh";
+	public static final String INTERVALO="intervalo";
 	
 	SharedPreferences mySharedPreferences;
 
