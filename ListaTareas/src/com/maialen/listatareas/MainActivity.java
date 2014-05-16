@@ -51,17 +51,14 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				// TODO Auto-generated method stub
-				if(event.getAction()==KeyEvent.ACTION_DOWN){
-					if(event.getAction()==KeyEvent.KEYCODE_DPAD_CENTER || event.getAction()==KeyEvent.KEYCODE_ENTER ){
-						
+				if(event.getAction() == KeyEvent.ACTION_DOWN) {
+					if((keyCode == KeyEvent.KEYCODE_DPAD_CENTER || keyCode == KeyEvent.KEYCODE_ENTER)) {
 						anadir();
-						
+						return true;
 					}
+				}
 					return false;
 				}
-				return false;
-			}
 		});
 		
 	}
