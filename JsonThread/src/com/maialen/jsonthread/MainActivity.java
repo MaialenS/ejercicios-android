@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 			request.setDestinationInExternalFilesDir(MainActivity.this, Environment.DIRECTORY_DOWNLOADS, "algo.zip");
 
 			//para cambiar como se ven en las notificaciones
-			request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+			//request.setNotificationVisibility(Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
 			
 			
 			
@@ -184,6 +184,10 @@ public class MainActivity extends Activity {
 		this.textoSalida= (TextView) findViewById(R.id.textArchivo);
 		
 		//codigo del profe para atender al click en la notificacion
+		//solo funciona mientras se esta descargando el fichero
+		//para hacerlo cuando termine hay que crear una notificacion a mano
+		//para poder responder al click
+		
 		BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent data) {
@@ -197,6 +201,9 @@ public class MainActivity extends Activity {
 					intent.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
 					context.startActivity(intent);
 				}
+				
+				textoSalida.setText("Descargando");
+				
 			}
 		};
 		registerReceiver(onNotificationClick, new IntentFilter(
