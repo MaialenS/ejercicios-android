@@ -26,28 +26,35 @@ public class MainActivity extends Activity {
 
 		textAct= (TextView) findViewById(R.id.textActulizar);
 		textTiempo= (TextView) findViewById(R.id.textTiempo);
-		
-		//mirar las preferencias
-		
-		//obtener las preferencias de MY_PREFS
-		mySharedPreferences = getSharedPreferences(SettingsActivity.MY_PREFS, Activity.MODE_PRIVATE);
-		//leer las preferencias
-		//mySharedPreferences.getBoolean("clave", valor_por_defecto)
-		boolean auto = mySharedPreferences.getBoolean(SettingsActivity.AUTOREFRESH, false);
-				
-		int position = mySharedPreferences.getInt(SettingsActivity.INTERVALO, 0);
-		
-		if(auto){
-			String[] mTestArray = getResources().getStringArray(R.array.array_internal); 
 
-			textAct.setText("Se actualiza automaticamente");
-			
-			textTiempo.setText("Tiempo de refresco "+mTestArray[position]);
-		}
-		
-		
 	}
 
+	@Override
+	public void onResume() {
+	    super.onResume();  // Always call the superclass method first
+
+	  //mirar las preferencias
+		
+	  		//obtener las preferencias de MY_PREFS
+	  		mySharedPreferences = getSharedPreferences(SettingsActivity.MY_PREFS, Activity.MODE_PRIVATE);
+	  		//leer las preferencias
+	  		//mySharedPreferences.getBoolean("clave", valor_por_defecto)
+	  		boolean auto = mySharedPreferences.getBoolean(SettingsActivity.AUTOREFRESH, false);
+	  				
+	  		int position = mySharedPreferences.getInt(SettingsActivity.INTERVALO, 0);
+	  		
+	  		if(auto){
+	  			String[] mTestArray = getResources().getStringArray(R.array.array_internal); 
+
+	  			textAct.setText("Se actualiza automaticamente");
+	  			
+	  			textTiempo.setText("Tiempo de refresco "+mTestArray[position]);
+	  		}else{
+	  			textAct.setText("No se actualiza automaticamente");
+	  		}
+	}
+	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
