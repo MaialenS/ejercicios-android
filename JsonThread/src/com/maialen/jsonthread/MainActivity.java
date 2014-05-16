@@ -141,6 +141,9 @@ public class MainActivity extends Activity {
 					int tamanoIdx = descargas.getColumnIndex(DownloadManager.COLUMN_TOTAL_SIZE_BYTES);
 					
 					while (descargas.moveToNext()) {
+					
+						//descargas.moveToFirst();
+					
 					    reason = descargas.getInt(reasonIdx);
 					    name = descargas.getString(nameIdx);
 					    tam = descargas.getLong(tamanoIdx);
@@ -150,6 +153,8 @@ public class MainActivity extends Activity {
 					
 					textoSalida.setText(name+ "\nTamano: "+tam+"\nEstado: "+reason);
 					
+					//no hay que olvidar cerrarlo
+					descargas.close();
 				}
 			}
 		};
@@ -177,6 +182,27 @@ public class MainActivity extends Activity {
 		this.listaFotos=new ArrayList<String>();
 
 		this.textoSalida= (TextView) findViewById(R.id.textArchivo);
+		
+		//codigo del profe para atender al click en la notificacion
+		BroadcastReceiver onNotificationClick = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent data) {
+				Log.d("DOWNLOADS", "onNotificationClick()");
+				long reference = data.getLongExtra(
+						DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+
+				if (reference == referenciaDescarga) {
+					Intent intent = new Intent(context, MainActivity.class);
+					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					intent.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+					context.startActivity(intent);
+				}
+			}
+		};
+		registerReceiver(onNotificationClick, new IntentFilter(
+				DownloadManager.ACTION_NOTIFICATION_CLICKED));
+		
+		
 	}
 
 	@Override
