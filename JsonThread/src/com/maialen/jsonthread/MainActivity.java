@@ -1,4 +1,4 @@
-package com.maiaalen.jsonthread;
+package com.maialen.jsonthread;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.maiaalen.jsonthread.R;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -116,6 +118,7 @@ public class MainActivity extends Activity {
 	private void ponerEscuchador(){
 		//Para recibir la notificacion de descarga cuando se hace con manager
 		//se crea un broadcast
+		Log.d(TAG, "pongo el escuchador");
 		IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 		receiver = new BroadcastReceiver() {
 			@Override
