@@ -11,13 +11,13 @@
     <string name="internal">Internal</string>
     
     
-    <string-array name="array_name_values">
+    <string-array name="array_internal_values">
 		<item>1</item>
 		<item>5</item>
 		<item>15</item>
 	</string-array>
     
-    <string-array name="array_name">
+    <string-array name="array_internal">
 		<item>1 min</item>
 		<item>5 min</item>
 		<item>15 min</item>
