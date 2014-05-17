@@ -22,9 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name="com.maialen.settingsframework.SettingsActivity"
-            android:label="@string/title_activity_settings" >
+            android:name="com.maialen.settingsframework.PreferenciasActivity"
+            android:label="@string/title_activity_preferencias" >
         </activity>
     </application>
 
