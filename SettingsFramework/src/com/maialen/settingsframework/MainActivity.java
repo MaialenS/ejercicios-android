@@ -20,7 +20,7 @@ import android.widget.TextView;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-public class MainActivity extends Activity implements OnSharedPreferenceChangeListener{
+public class MainActivity extends Activity {
 
 	private static final int SHOW_PREFERENCES = 1;
 	private SharedPreferences prefs;
@@ -86,26 +86,11 @@ public class MainActivity extends Activity implements OnSharedPreferenceChangeLi
 	    //para escuchar el cambio en las preferencias registrar el escuchador
 	 // Register this OnSharedPreferenceChangeListener
 
-	    prefs.registerOnSharedPreferenceChangeListener(this);
+	    
 	    
 	    
 	}
 
-	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		// TODO Auto-generated method stub
-
-		 if(key.equals(PreferenciasActivity.KEY_PREF_ACTUALIZAR)){
-			 Log.d("ACT", "Se ha cambiado el autorefresh");
-		 }else if(key.equals(PreferenciasActivity.KEY_PREF_INTERVALOS)){
-			 Log.d("ACT", "Se ha cambiado el intervalo");
-		 }else if(key.equals(PreferenciasActivity.KEY_PREF_MAGNITUD)){
-			 Log.d("ACT", "Se ha cambiado la magnitud");
-		 }else{
-			 Log.d("ACT", "Algo se ha cambiado");
-		 }
-		
-	}
+	
 
 }
