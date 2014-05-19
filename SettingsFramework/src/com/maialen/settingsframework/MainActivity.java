@@ -8,7 +8,9 @@ import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,11 +20,13 @@ import android.widget.TextView;
 import android.os.Build;
 import android.preference.PreferenceManager;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements OnSharedPreferenceChangeListener{
 
 	private static final int SHOW_PREFERENCES = 1;
+	private SharedPreferences prefs;
 	
 	private TextView txtAutorefresh, txtIntervalo, txtMagnitud;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,7 @@ public class MainActivity extends Activity {
 
 	  //mirar las preferencias
 	    Context context = getApplicationContext();
-	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);	
+	    prefs = PreferenceManager.getDefaultSharedPreferences(context);	
 	  	//String syncConnPref = sharedPref.getString(SettingsActivity.KEY_PREF_SYNC_CONN, "");	
 	    
 	    boolean auto = prefs.getBoolean(PreferenciasActivity.KEY_PREF_ACTUALIZAR, false);
@@ -79,6 +83,29 @@ public class MainActivity extends Activity {
 	    txtMagnitud.setText(magnitud);
 	    
 	    
+	    //para escuchar el cambio en las preferencias registrar el escuchador
+	 // Register this OnSharedPreferenceChangeListener
+
+	    prefs.registerOnSharedPreferenceChangeListener(this);
+	    
+	    
+	}
+
+	@Override
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+			String key) {
+		// TODO Auto-generated method stub
+
+		 if(key.equals(PreferenciasActivity.KEY_PREF_ACTUALIZAR)){
+			 Log.d("ACT", "Se ha cambiado el autorefresh");
+		 }else if(key.equals(PreferenciasActivity.KEY_PREF_INTERVALOS)){
+			 Log.d("ACT", "Se ha cambiado el intervalo");
+		 }else if(key.equals(PreferenciasActivity.KEY_PREF_MAGNITUD)){
+			 Log.d("ACT", "Se ha cambiado la magnitud");
+		 }else{
+			 Log.d("ACT", "Algo se ha cambiado");
+		 }
+		
 	}
 
 }
