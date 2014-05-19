@@ -5,5 +5,10 @@
         android:fragment="com.maialen.settingsframework.PreferenciasFragment"
         android:summary="Preferencias para terremotos"
         android:title="Preferencias app" />
+    <header 
+        android:title="Intent"
+        android:summary="Launches an Intent.">
+        <intent android:action="android.settings.DISPLAY_SETTINGS"/>
+  </header>
 
 </preference-headers>
