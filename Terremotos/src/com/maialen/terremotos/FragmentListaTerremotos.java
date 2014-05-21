@@ -42,6 +42,7 @@ public class FragmentListaTerremotos extends Fragment{
     	
         c=bd.getTerremotoMagnitud(obtenerMagnitud());   
         
+        /*
         //adaptador para el cursor y un listView
         // For the cursor adapter, specify which columns go into which views
            String[] fromColumns = {TerremotosDBOpenHelper.PLACE_COLUMN};
@@ -52,6 +53,17 @@ public class FragmentListaTerremotos extends Fragment{
                    android.R.layout.simple_list_item_1, c,
                    fromColumns, toViews, 0);
            
+           
+       */
+        
+        String[] fromColumns = {TerremotosDBOpenHelper.MAGNITUDE_COLUMN, TerremotosDBOpenHelper.PLACE_COLUMN, TerremotosDBOpenHelper.TIME_COLUMN};
+        int[] toViews = {R.id.textTupaMagnitud, R.id.textTuplaLugar, R.id.textTupaFecha}; // The TextView in simple_list_item_1
+        // Create an empty adapter we will use to display the loaded data.
+        // We pass null for the cursor, then update it in onLoadFinished()
+        mAdapter = new SimpleCursorAdapter(getActivity(), 
+                R.layout.tupla_terremoto, c,
+                fromColumns, toViews, 0);
+        
            listaTerremotos.setAdapter(mAdapter);
 
 
@@ -63,11 +75,11 @@ public class FragmentListaTerremotos extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		//buscar nuevos terremotos
 		
-		//descargarNuevosTerremotos();
+		descargarNuevosTerremotos();
 		
 	}
 	
-	private void descargarNuevosTerremotos(){
+	public void descargarNuevosTerremotos(){
 		
 		ObtenerTerremotos obtenerTerremotos=new ObtenerTerremotos(bd);
     	obtenerTerremotos.buscar();
@@ -75,6 +87,11 @@ public class FragmentListaTerremotos extends Fragment{
     	c=bd.getTerremotoMagnitud(obtenerMagnitud());   
     	mAdapter.changeCursor(c);
 	}
+	
+	private void obtenerTerremotos(){
+		
+	}
+	
 	
 	private float obtenerMagnitud(){
 		
