@@ -10,17 +10,23 @@ import android.util.Log;
 public class TerremotosBD {
 
 	private static final String TAG = "Terremotos";
-	private static TerremotosBD instance = null;
+	private static TerremotosBD INSTANCE = null;
 
 	TerremotosDBOpenHelper mDbHelper;
 	private SQLiteDatabase db;
 
-	public TerremotosBD(Context context) {
-
-		
+	private TerremotosBD(Context context) {
 		super();
-		
 		mDbHelper = new TerremotosDBOpenHelper(context);
+	}
+
+	public static TerremotosBD getDB(Context context) {
+		if (INSTANCE == null) {
+			INSTANCE = new TerremotosBD(context);
+			INSTANCE.open();
+		}
+
+		return INSTANCE;
 	}
 
 	public void open() throws SQLException {
@@ -46,9 +52,9 @@ public class TerremotosBD {
 			values.put(mDbHelper.LAT_COLUMN, terremoto.getLatitude());
 			values.put(mDbHelper.LON_COLUMN, terremoto.getLongitude());
 			values.put(mDbHelper.URL_COLUMN, terremoto.getUrl());
-			
 
-			long ok = db.insert(TerremotosDBOpenHelper.DATABASE_TABLE, null, values);
+			long ok = db.insert(TerremotosDBOpenHelper.DATABASE_TABLE, null,
+					values);
 			Log.d(TAG, "insertando, estado--> " + String.valueOf(ok));
 
 		} else {
@@ -76,7 +82,7 @@ public class TerremotosBD {
 		String whereArgs[] = null;
 		String groupBy = null;
 		String having = null;
-		String order = null;
+		String order = mDbHelper.TIME_COLUMN+ " DESC";
 
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Cursor cursor = db.query(TerremotosDBOpenHelper.DATABASE_TABLE,
@@ -109,7 +115,7 @@ public class TerremotosBD {
 
 		return cursor;
 	}
-	
+
 	public Cursor getTerremotoMagnitud(float mag) {
 		// ArrayList<Terremoto> terremotos = new ArrayList<Terremoto>();
 
@@ -126,7 +132,7 @@ public class TerremotosBD {
 		String whereArgs[] = { String.valueOf(mag) };
 		String groupBy = null;
 		String having = null;
-		String order = null;
+		String order = mDbHelper.TIME_COLUMN+ " DESC";
 
 		SQLiteDatabase db = mDbHelper.getWritableDatabase();
 		Cursor cursor = db.query(TerremotosDBOpenHelper.DATABASE_TABLE,

@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		TerremotosBD bd=new TerremotosBD(this);
+		TerremotosBD bd= TerremotosBD.getDB(this);
     	bd.open();
 		
 		//pruebas con bd
@@ -82,8 +82,7 @@ public class MainActivity extends Activity {
 		//pruebas con json
     	
     	
-    	ObtenerTerremotos obtenerTerremotos=new ObtenerTerremotos(bd);
-    	obtenerTerremotos.buscar();
+    	
 		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()

@@ -1,6 +1,7 @@
 package com.maialen.terremotos;
 
 
+import com.maialen.datos.ObtenerTerremotos;
 import com.maialen.datos.TerremotosBD;
 import com.maialen.datos.TerremotosDBOpenHelper;
 import com.maialen.preferencias.PreferenciasActivity;
@@ -12,22 +13,20 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
-import android.widget.Button;
-import android.widget.EditText;
+
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class FragmentListaTerremotos extends Fragment{
-
+	private static final String TAG="Terremotos";
 	private SimpleCursorAdapter mAdapter;
 	private ListView listaTerremotos;
+	private Cursor c;
 	
+	TerremotosBD bd;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -39,13 +38,9 @@ public class FragmentListaTerremotos extends Fragment{
 		//ponerlo en modo singleton
 		//PARA PASARLE EL PADRE
 		
-		TerremotosBD bd=new TerremotosBD(getActivity());
+		bd = TerremotosBD.getDB(getActivity());
     	
-		
-		
-
-		
-        Cursor c=bd.getAllTerremotos();   
+        c=bd.getTerremotoMagnitud(obtenerMagnitud());   
         
         //adaptador para el cursor y un listView
         // For the cursor adapter, specify which columns go into which views
@@ -68,15 +63,30 @@ public class FragmentListaTerremotos extends Fragment{
 		super.onActivityCreated(savedInstanceState);
 		//buscar nuevos terremotos
 		
-		descargarNuevosTerremotos();
+		//descargarNuevosTerremotos();
 		
 	}
 	
 	private void descargarNuevosTerremotos(){
 		
-		
+		ObtenerTerremotos obtenerTerremotos=new ObtenerTerremotos(bd);
+    	obtenerTerremotos.buscar();
+    	
+    	c=bd.getTerremotoMagnitud(obtenerMagnitud());   
+    	mAdapter.changeCursor(c);
 	}
 	
+	private float obtenerMagnitud(){
+		
+		//mirar las preferencias
+	    Context context = getActivity();
+	    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);	
+	  	
+	    Log.d(TAG, "buscando la magnitud");
+	    float mag = (float)Double.parseDouble(prefs.getString(PreferenciasActivity.KEY_PREF_MAGNITUD, "0"));
+	    Log.d(TAG, "magnitud de los settings -->"+mag);
+		return mag;
 	
+	}
 	
 }
