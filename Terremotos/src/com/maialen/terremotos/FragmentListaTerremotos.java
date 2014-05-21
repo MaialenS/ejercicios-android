@@ -34,13 +34,15 @@ public class FragmentListaTerremotos extends Fragment{
 		// Inflate the layout for this fragment
 
 		View v = inflater.inflate(R.layout.fragment_lista_terremotos, container, false);
-
+		
+		listaTerremotos= (ListView) v.findViewById(R.id.listaTerremotos);
 		//ponerlo en modo singleton
 		//PARA PASARLE EL PADRE
+		
 		TerremotosBD bd=new TerremotosBD(getActivity());
-    	bd.open();
-			
-		listaTerremotos= (ListView) v.findViewById(R.id.listaTerremotos);
+    	
+		
+		
 
 		
         Cursor c=bd.getAllTerremotos();   
@@ -63,11 +65,17 @@ public class FragmentListaTerremotos extends Fragment{
 
 	
 	public void onActivityCreated (Bundle savedInstanceState){
-		
+		super.onActivityCreated(savedInstanceState);
 		//buscar nuevos terremotos
+		
+		descargarNuevosTerremotos();
 		
 	}
 	
+	private void descargarNuevosTerremotos(){
+		
+		
+	}
 	
 	
 	
