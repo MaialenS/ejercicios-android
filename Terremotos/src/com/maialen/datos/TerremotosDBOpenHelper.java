@@ -12,16 +12,16 @@ public class TerremotosDBOpenHelper extends SQLiteOpenHelper{
 	private static final int DATABASE_VERSION = 1;
 
 
-	protected static final String ID_COLUMN = "_id";
-	protected static final String ID_TERREMOTO = "id_terremoto";
-	protected static final String PLACE_COLUMN = "place";
-	protected static final String TIME_COLUMN = "time";
-	protected static final String DETAIL_COLUMN = "detail";
-	protected static final String MAGNITUDE_COLUMN = "magnitude";
-	protected static final String LAT_COLUMN = "lat";
-	protected static final String LON_COLUMN = "long";
-	protected static final String URL_COLUMN = "url";
-	protected static final String UPDATED_AT_COLUMN = "updated_at";
+	public static final String ID_COLUMN = "_id";
+	public static final String ID_TERREMOTO = "id_terremoto";
+	public static final String PLACE_COLUMN = "place";
+	public static final String TIME_COLUMN = "time";
+	public static final String DETAIL_COLUMN = "detail";
+	public static final String MAGNITUDE_COLUMN = "magnitude";
+	public static final String LAT_COLUMN = "lat";
+	public static final String LON_COLUMN = "long";
+	public static final String URL_COLUMN = "url";
+	public static final String UPDATED_AT_COLUMN = "updated_at";
 
 	private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE + 
 									" ( " + ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_TERREMOTO + " TEXT UNIQUE, " + PLACE_COLUMN + " TEXT, " 

@@ -10,13 +10,16 @@ import android.util.Log;
 public class TerremotosBD {
 
 	private static final String TAG = "Terremotos";
+	private static TerremotosBD instance = null;
 
 	TerremotosDBOpenHelper mDbHelper;
 	private SQLiteDatabase db;
 
 	public TerremotosBD(Context context) {
-		super();
 
+		
+		super();
+		
 		mDbHelper = new TerremotosDBOpenHelper(context);
 	}
 
