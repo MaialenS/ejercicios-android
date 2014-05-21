@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+     <PreferenceCategory
+            android:title="@string/Intervalos">
+
+        <CheckBoxPreference
+                android:key="AUTOREFRESH"
+                android:title="@string/autorefresh"
+                android:summary="@string/autorefresh_descripcion" 
+                android:defaultValue="false"
+                />
+        
+
+      <ListPreference
+                android:key="INTERVALOS"
+                android:title="@string/Intervalos"
+                android:summary="@string/Periodos"
+                android:entries="@array/array_internal"
+                android:entryValues="@array/array_internal_values"
+                android:dialogTitle="@string/Periodos" 
+                android:defaultValue="1"
+                />
+
+    </PreferenceCategory>
+    
+    <PreferenceCategory
+            android:title="@string/Magnitud">
+
+
+      <ListPreference
+                android:key="MAGNITUD"
+                android:title="@string/Magnitud"
+                android:summary="@string/Magnitudes"
+                android:entries="@array/array_magnitudes"
+                android:entryValues="@array/array_magnitudes"
+                android:dialogTitle="@string/Magnitud" 
+                android:defaultValue="1"
+                />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
