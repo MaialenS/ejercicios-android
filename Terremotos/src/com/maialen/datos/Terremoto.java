@@ -5,7 +5,7 @@ public class Terremoto {
 	private int id;
 	private String idStr;
 	private String place;
-	private int time;
+	private long time;
 	private String detail;
 	private Float magnitude;
 	private Float lat;
@@ -13,14 +13,14 @@ public class Terremoto {
 	private String url;
 //	private int updated_at;
 
-	public Terremoto(int id, String idStr , String place, int time, String detail,
+	public Terremoto(int id, String idStr , String place, long time, String detail,
 			Float magnitude, Float lat, Float lon, String url) {
 
 		this(idStr, place, time, detail, magnitude, lat, lon, url);
 		this.id=id;
 	}
 	
-	public Terremoto(String idStr , String place, int time, String detail,
+	public Terremoto(String idStr , String place, long time, String detail,
 			Float magnitude, Float lat, Float lon, String url) {
 
 		super();
@@ -48,7 +48,7 @@ public class Terremoto {
 	public String getPlace() {
 		return place;
 	}
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 	public String getDetail() {

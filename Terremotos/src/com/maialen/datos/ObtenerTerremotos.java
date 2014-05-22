@@ -47,6 +47,7 @@ public class ObtenerTerremotos extends Activity {
 	private void descargarDatos() {
 		try {
 			String path="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
+			path="http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime=2014-05-14%2000:00:00&minmagnitude=0&eventtype=earthquake&format=geojson&orderby=time&limit=20";
 			URL url = new URL(path);
 			URLConnection connection = url.openConnection();
 			HttpURLConnection httpConnection = (HttpURLConnection) connection;
@@ -84,7 +85,7 @@ public class ObtenerTerremotos extends Activity {
 				JSONArray coordenadas = eq.getJSONObject("geometry")
 						.getJSONArray("coordinates");
 
-				Terremoto t = new Terremoto(eq.getString("id") , propiedades.getString("place"), propiedades.getInt("time"), propiedades.getString("detail"),
+				Terremoto t = new Terremoto(eq.getString("id") , propiedades.getString("place"), propiedades.getLong("time"), propiedades.getString("detail"),
 						(float) propiedades.getDouble("mag"), (float) coordenadas.getDouble(1), (float) coordenadas.getDouble(0), propiedades.getString("url"));
 
 				
