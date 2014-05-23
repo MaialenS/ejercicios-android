@@ -64,7 +64,7 @@ public class ListaTerremotosAdapter extends CursorAdapter {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
 		// poner los valores en la tupla
-
+/*
 		String magnitud = cursor.getString(cursor
 				.getColumnIndex(TerremotosDBOpenHelper.MAGNITUDE_COLUMN));
 		String lugar = cursor.getString(cursor
@@ -78,6 +78,6 @@ public class ListaTerremotosAdapter extends CursorAdapter {
 		holder.magnitud.setText(magnitud);
 		holder.lugar.setText(lugar);
 		holder.fecha.setText(fechaFormateada);
-
+*/
 	}
 }

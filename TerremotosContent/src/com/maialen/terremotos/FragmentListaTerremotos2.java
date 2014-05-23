@@ -49,15 +49,15 @@ public class FragmentListaTerremotos2 extends ListFragment {
 		public void onResume() {
 		    super.onResume();
 		    
-		    
-		    
+		   
+		    /*
 		    buscarTerremotosBD= new BuscarBDTerremotosAsync(getActivity(), this);
 	        buscarTerremotosInternet= new ObtenerTerremotosAsync(getActivity(), this);
 	        
 	        buscarTerremotosBD.execute();
 	        
 	        descargarNuevosTerremotos();
-		    
+		    */
 		    
 		    
 	 }
@@ -66,19 +66,12 @@ public class FragmentListaTerremotos2 extends ListFragment {
 	 
 		
 		public void descargarNuevosTerremotos(){
-			/*
-			ObtenerTerremotos obtenerTerremotos=new ObtenerTerremotos(bd);
-	    	obtenerTerremotos.buscar();
-	    	
-	    	c=bd.getTerremotoMagnitud(obtenerMagnitud());   
-	    	this.adapter.changeCursor(c);
-	    	this.adapter.notifyDataSetChanged();
-	    	*/
+
 				
 			String path = getString(R.string.url_terremotos);
 			try {
 				URL url = new URL(path);			
-				buscarTerremotosInternet.execute(url);
+				//buscarTerremotosInternet.execute(url);
 
 			} catch (MalformedURLException e) {
 				
@@ -121,7 +114,7 @@ public class FragmentListaTerremotos2 extends ListFragment {
 	    	//buscar en la BD
 			//buscarTerremotosBD.execute();
 			
-			BuscarBDTerremotosAsync buscar2= new BuscarBDTerremotosAsync(getActivity(), this);
+			//BuscarBDTerremotosAsync buscar2= new BuscarBDTerremotosAsync(getActivity(), this);
 		}
 		
 		

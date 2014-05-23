@@ -6,8 +6,10 @@ import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
 public class TerremotosContentProvider extends ContentProvider{
@@ -23,11 +25,22 @@ public class TerremotosContentProvider extends ContentProvider{
 	static {
 		   uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 		   uriMatcher.addURI("com.maialen.preferencias.PreferenciasActivity", "elements", ALLROWS);
-		   uriMatcher.addURI("com.maialen.preferencias.PreferenciasActivity", "elements/#", SINGLE_ROW);
-				   
+		   uriMatcher.addURI("com.maialen.preferencias.PreferenciasActivity", "elements/#", SINGLE_ROW);   
 		}
 	
+	//columnas de la BD
+	public static final String ID_COLUMN = "_id";
+	public static final String ID_TERREMOTO = "id_terremoto";
+	public static final String PLACE_COLUMN = "place";
+	public static final String TIME_COLUMN = "time";
+	public static final String DETAIL_COLUMN = "detail";
+	public static final String MAGNITUDE_COLUMN = "magnitude";
+	public static final String LAT_COLUMN = "lat";
+	public static final String LON_COLUMN = "long";
+	public static final String URL_COLUMN = "url";
+	public static final String UPDATED_AT_COLUMN = "updated_at";
 	
+
 	
 	@Override
 	public int delete(Uri arg0, String arg1, String[] arg2) {
@@ -57,10 +70,40 @@ public class TerremotosContentProvider extends ContentProvider{
 	}
 
 	@Override
-	public Cursor query(Uri arg0, String[] arg1, String arg2, String[] arg3,
-			String arg4) {
+	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
 		// TODO Auto-generated method stub
-		return null;
+		Cursor c=null;
+		
+		//abir la BD con el helper
+		
+		SQLiteDatabase db;
+		try {
+			db = terremotosHelper.getWritableDatabase();
+		} catch (SQLiteException ex) {
+			db = terremotosHelper.getReadableDatabase();
+		}
+		
+		//preparar el constructor de la pregunta
+		SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+		
+		//comprobar que tipo de consulta se quiere hacer y devolver lo que se quiere 
+		
+		switch (uriMatcher.match(uri)) {
+		  case SINGLE_ROW :
+			  //obtener lo que pone tras la uri
+		    String rowID = uri.getPathSegments().get(1);
+		    queryBuilder.appendWhere(ID_COLUMN + "=" + rowID);
+		    break;
+		  case ALLROWS:  
+			  
+			  break;
+		  default: break;
+		}
+		
+		
+		
+		
+		return c;
 	}
 
 	@Override
@@ -70,25 +113,13 @@ public class TerremotosContentProvider extends ContentProvider{
 	}
 	
 	
-	//ell helper de la BD
+	//el helper de la BD
 	
 	private class TerremotosDBOpenHelper extends SQLiteOpenHelper{
 
 		private static final String DATABASE_NAME = "terremotosBD.db";
 		protected static final String DATABASE_TABLE = "Terremotos";
 		private static final int DATABASE_VERSION = 1;
-
-
-		public static final String ID_COLUMN = "_id";
-		public static final String ID_TERREMOTO = "id_terremoto";
-		public static final String PLACE_COLUMN = "place";
-		public static final String TIME_COLUMN = "time";
-		public static final String DETAIL_COLUMN = "detail";
-		public static final String MAGNITUDE_COLUMN = "magnitude";
-		public static final String LAT_COLUMN = "lat";
-		public static final String LON_COLUMN = "long";
-		public static final String URL_COLUMN = "url";
-		public static final String UPDATED_AT_COLUMN = "updated_at";
 
 		private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE + 
 										" ( " + ID_COLUMN + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ ID_TERREMOTO + " TEXT UNIQUE, " + PLACE_COLUMN + " TEXT, " 
