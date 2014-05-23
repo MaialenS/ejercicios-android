@@ -1,11 +1,14 @@
 package com.maialen.terremotos;
 
 import com.maialen.adaptadores.ListaTerremotosAdapter;
-import java.text.SimpleDateFormat;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.maialen.datos.ObtenerTerremotos;
+import com.maialen.datos.ObtenerTerremotosAsync;
 import com.maialen.datos.TerremotosBD;
 import com.maialen.datos.TerremotosDBOpenHelper;
 import com.maialen.preferencias.PreferenciasActivity;
@@ -24,7 +27,7 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentListaTerremotos2 extends ListFragment{
+public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTerremotosAsync.IDatosNuevo{
 	private static final String TAG="Terremotos";
 //	private SimpleCursorAdapter mAdapter;
 	
@@ -54,13 +57,33 @@ public class FragmentListaTerremotos2 extends ListFragment{
 
 		
 		public void descargarNuevosTerremotos(){
-			
+			/*
 			ObtenerTerremotos obtenerTerremotos=new ObtenerTerremotos(bd);
 	    	obtenerTerremotos.buscar();
 	    	
 	    	c=bd.getTerremotoMagnitud(obtenerMagnitud());   
 	    	this.adapter.changeCursor(c);
 	    	this.adapter.notifyDataSetChanged();
+	    	*/
+			
+			ObtenerTerremotosAsync asiync= new ObtenerTerremotosAsync(getActivity(), this);
+	    	
+			
+			String path = getString(R.string.url_terremotos);
+			try {
+				URL url = new URL(path);
+				
+				asiync.execute(url);
+				
+				
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+	    	
+	    	
 		}
 			
 		
@@ -86,6 +109,17 @@ public class FragmentListaTerremotos2 extends ListFragment{
 		  // Apply any required UI change now that the Fragment is visible.
 		  
 		  
+		}
+
+
+		@Override
+		public void actulizarVista() {
+			// se han obtenido nuevos datos de internet
+			
+			c=bd.getTerremotoMagnitud(obtenerMagnitud());   
+	    	this.adapter.changeCursor(c);
+	    	this.adapter.notifyDataSetChanged();
+			
 		}
 
 }
