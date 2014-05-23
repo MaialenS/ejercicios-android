@@ -100,10 +100,13 @@ public class TerremotosContentProvider extends ContentProvider{
 		  default: break;
 		}
 		
+		queryBuilder.setTables(TerremotosDBOpenHelper.DATABASE_TABLE);
 		
+		String groupBy=null;
+		String having=null;
+		Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, groupBy, having, sortOrder);
 		
-		
-		return c;
+		return cursor;
 	}
 
 	@Override
