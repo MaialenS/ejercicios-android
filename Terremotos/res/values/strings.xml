@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="url_terremotos">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
     <string name="title_activity_preferencias">PreferenciasActivity</string>
+    <string name="action_refresh">refrescar</string>
 
     
     <string name="autorefresh">Autorefresh</string>

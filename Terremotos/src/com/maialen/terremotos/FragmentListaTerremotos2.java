@@ -21,26 +21,30 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTerremotosAsync.IDatosNuevo, BuscarBDTerremotosAsync.IBuscarBD {
+	static final String STATE_ACTIVIDAD = "estadoActividad";
 	private static final String TAG="Terremotos";
 //	private SimpleCursorAdapter mAdapter;
 	
-	private Cursor c;
-	
-	private TerremotosBD bd;
 	static final String STATE_LISTADO = "estadoListado";
 
 	private ListaTerremotosAdapter adapter;
 	
-	BuscarBDTerremotosAsync buscarTerremotosBD;
-	ObtenerTerremotosAsync buscarTerremotosInternet;
+	private BuscarBDTerremotosAsync buscarTerremotosBD;
+	private ObtenerTerremotosAsync buscarTerremotosInternet;
+	
+	
 	
 
 	 @Override
@@ -50,7 +54,14 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 	        this.adapter= new ListaTerremotosAdapter(getActivity(), null);
 
 	        setListAdapter(this.adapter);
+    /*
+	        buscarTerremotosBD= new BuscarBDTerremotosAsync(getActivity(), this);
+	        buscarTerremotosInternet= new ObtenerTerremotosAsync(getActivity(), this);
 	        
+	        buscarTerremotosBD.execute();
+	        
+	        descargarNuevosTerremotos();
+	        */
 	        
 	 }
 	 
@@ -59,6 +70,8 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 		public void onResume() {
 		    super.onResume();
 		    
+		    
+		    
 		    buscarTerremotosBD= new BuscarBDTerremotosAsync(getActivity(), this);
 	        buscarTerremotosInternet= new ObtenerTerremotosAsync(getActivity(), this);
 	        
@@ -66,8 +79,12 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 	        
 	        descargarNuevosTerremotos();
 		    
+		    
+		    
 	 }
 
+	
+	 
 		
 		public void descargarNuevosTerremotos(){
 			/*
@@ -138,6 +155,19 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 			
 		}
 
+		
+		//////////PONER EL BOTON DE REFRESH EN EL MENU////////
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
+			// TODO Auto-generated method stub
+			super.onCreateContextMenu(menu, v, menuInfo);
+			
+			
+			
+			
+			
+		}
+		
 
 		
 }

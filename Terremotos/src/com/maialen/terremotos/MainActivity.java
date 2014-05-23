@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,55 +35,7 @@ public class MainActivity extends Activity {
 		TerremotosBD bd= TerremotosBD.getDB(this);
     	bd.open();
 		
-		//pruebas con bd
-/*
-    	Terremoto terremoto= new Terremoto("42", "un lugar42", 2151, "detalles42",
-    			(float)20.1, (float)0.22, (float)541.0, "una url42");
-    	
-    	Terremoto terremoto2= new Terremoto("22", "un lugar22", 2151, "detalles22",
-    			(float)20.1, (float)0.22, (float)541.0, "una url42");
 
-
-    	bd.crearTerremoto(terremoto);
-    	bd.crearTerremoto(terremoto2);
-   	
-    	Cursor c=bd.getAllTerremotos();    	
-    	
-    	if(c!=null){
-    		//obtener el indice de la id y el lugar
-        	int index_id = c.getColumnIndexOrThrow(TerremotosDBOpenHelper.ID_COLUMN);
-        	int index_terremoto = c.getColumnIndexOrThrow(TerremotosDBOpenHelper.ID_TERREMOTO);
-        	int index_lugar = c.getColumnIndexOrThrow(TerremotosDBOpenHelper.PLACE_COLUMN);
-    		    		
-    		Log.d(TAG, "tama–o del cursor-->"+c.getCount());
-    		
-    		int id ;
-			String lugar, terr;
-    		
-    		// looping through all rows and adding to list
-    	    if (c.moveToFirst()) {
-    	    	Log.d(TAG, "cursor to first");
-    	        do {
-    	        	
-    	        	id = c.getInt(index_id);
-    	        	terr=c.getString(index_terremoto);
-    				lugar= c.getString(index_lugar);
-    				
-    				Log.d(TAG, "id-->"+id+" terremoto-->"+terr+" lugar --> "+lugar);
-    	        } while (c.moveToNext());
-    	    }else{
-    	    	Log.d(TAG, "no se movio al primero");
-    	    }
-
-    	}else{
-    		Log.d(TAG, "cursor null");
-    	}
-		
-		*/ 
-		//pruebas con json
-    	
-    	
-    	
 		
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
@@ -95,8 +48,14 @@ public class MainActivity extends Activity {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
+		
+	
+	    
 		return true;
 	}
+	
+
+	
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -106,7 +65,7 @@ public class MainActivity extends Activity {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			Intent i = new Intent(this, PreferenciasActivity.class);
-			startActivityForResult(i, SHOW_PREFERENCES);
+			startActivity(i);
 			
 			return true;
 		}

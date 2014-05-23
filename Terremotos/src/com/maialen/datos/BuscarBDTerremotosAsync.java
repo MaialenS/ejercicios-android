@@ -31,6 +31,7 @@ public class BuscarBDTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 	private Context contex;
 	private TerremotosBD bd;
 	private IBuscarBD activity;
+	private Cursor c;
 	
 	public interface IBuscarBD {
 		public void actulizarVista(Cursor c);
@@ -62,9 +63,9 @@ public class BuscarBDTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 		
 		
 		
-		Cursor c= bd.getTerremotoMagnitud(obtenerMagnitud());
+		c= bd.getTerremotoMagnitud(obtenerMagnitud());
 		
-		this.activity.actulizarVista(c);
+		
 		
 		
 		return null;
@@ -79,6 +80,7 @@ public class BuscarBDTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 	@Override
     protected void onPostExecute(Long result) {
 		Log.d(TAG, "onProgressUpdate");
+		this.activity.actulizarVista(c);
 		
     }
 	
