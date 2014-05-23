@@ -15,74 +15,76 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import android.app.Activity;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long>{
+public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 	private static final String TAG = "Terremotos";
-	
+
 	private Context contex;
 	private TerremotosBD bd;
 	private IDatosNuevo activity;
-	
-	public interface IDatosNuevo {
-		public void actulizarVista();
-	}
-	
+	URL url;
 
-	public ObtenerTerremotosAsync(Context contex, IDatosNuevo activity){
+	public interface IDatosNuevo {
+		public void buscarBD();
+	}
+
+	public ObtenerTerremotosAsync(Context contex, IDatosNuevo activity) {
 		Log.d(TAG, "ObtenerTerremotosAsync constructor");
-		this.contex=contex;
+		// comprobar que quien lo llama implementa la interfaz
+				try {
+					this.activity = (IDatosNuevo) activity;	
+
+				} catch (ClassCastException e) {
+					throw new ClassCastException(activity.toString()
+							+ " no implementa la interfaz IAddItem");
+				}
+		
+		this.contex = contex;
 		bd = TerremotosBD.getDB(contex);
-		this.activity=activity;
+		this.activity = activity;
 	}
 
 	@Override
 	protected Long doInBackground(URL... arg0) {
 		// TODO Auto-generated method stub
-		
+
 		Log.d(TAG, "doInBackground");
-		
-		//comprobar que quien lo llama implementa la interfaz
-		try {
-			this.activity = (IDatosNuevo)activity;
-		} catch(ClassCastException e) {
-			throw new ClassCastException(activity.toString() + " no implementa la interfaz IAddItem");
-		}
-		
+
+		url =arg0[0];
+
 		descargarDatos();
 		
 		return null;
-		
+
 	}
 
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
 		Log.d(TAG, "onPostExecute");
-    }
+	}
 
 	@Override
-    protected void onPostExecute(Long result) {
+	protected void onPostExecute(Long result) {
 		Log.d(TAG, "onProgressUpdate");
-		this.activity.actulizarVista();
-    }
-	
+		
+		this.activity.buscarBD();
+
+	}
+
 	@Override
-	protected void onPreExecute (){
+	protected void onPreExecute() {
 		Log.d(TAG, "onPreExecute");
 	}
-	
-	
-	//////////funciones utiles///////////////
+
+	// ////////funciones utiles///////////////
 	private void descargarDatos() {
 		try {
-			String path="http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson";
-			path="http://comcat.cr.usgs.gov/fdsnws/event/1/query?starttime=2014-05-14%2000:00:00&minmagnitude=0&eventtype=earthquake&format=geojson&orderby=time&limit=20";
-			URL url = new URL(path);
-			URLConnection connection = url.openConnection();
+			URLConnection connection = this.url.openConnection();
 			HttpURLConnection httpConnection = (HttpURLConnection) connection;
 			int responseCode = httpConnection.getResponseCode();
 			if (responseCode == HttpURLConnection.HTTP_OK) {
@@ -94,8 +96,7 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
-		
+		}
 
 	}
 
@@ -110,23 +111,27 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 
 			JSONArray arrayTerremotos = json.getJSONArray("features");
 
-			//Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
-			
+			// Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
+
 			for (int i = 0; i < arrayTerremotos.length(); i++) {
 				JSONObject eq = arrayTerremotos.getJSONObject(i);
 				JSONObject propiedades = eq.getJSONObject("properties");
 				JSONArray coordenadas = eq.getJSONObject("geometry")
 						.getJSONArray("coordinates");
 
-				Terremoto t = new Terremoto(eq.getString("id") , propiedades.getString("place"), propiedades.getLong("time"), propiedades.getString("detail"),
-						(float) propiedades.getDouble("mag"), (float) coordenadas.getDouble(1), (float) coordenadas.getDouble(0), propiedades.getString("url"));
+				Terremoto t = new Terremoto(eq.getString("id"),
+						propiedades.getString("place"),
+						propiedades.getLong("time"),
+						propiedades.getString("detail"),
+						(float) propiedades.getDouble("mag"),
+						(float) coordenadas.getDouble(1),
+						(float) coordenadas.getDouble(0),
+						propiedades.getString("url"));
 
-				
 				// guardarlo donde sea
-				//Log.d(TAG, t.toString());
+				// Log.d(TAG, t.toString());
 				bd.insertarTerremoto(t);
-			
-				
+
 			}
 
 		} catch (UnsupportedEncodingException e) {
@@ -151,7 +156,4 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long>{
 		return sb.toString();
 	}
 
-	
-	
-	
 }

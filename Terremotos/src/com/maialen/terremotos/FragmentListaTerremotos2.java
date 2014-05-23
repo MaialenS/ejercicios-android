@@ -9,6 +9,7 @@ import java.util.Date;
 
 import com.maialen.datos.ObtenerTerremotos;
 import com.maialen.datos.ObtenerTerremotosAsync;
+import com.maialen.datos.BuscarBDTerremotosAsync;
 import com.maialen.datos.TerremotosBD;
 import com.maialen.datos.TerremotosDBOpenHelper;
 import com.maialen.preferencias.PreferenciasActivity;
@@ -27,32 +28,44 @@ import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTerremotosAsync.IDatosNuevo{
+public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTerremotosAsync.IDatosNuevo, BuscarBDTerremotosAsync.IBuscarBD {
 	private static final String TAG="Terremotos";
 //	private SimpleCursorAdapter mAdapter;
 	
 	private Cursor c;
 	
-	TerremotosBD bd;
+	private TerremotosBD bd;
 	static final String STATE_LISTADO = "estadoListado";
 
 	private ListaTerremotosAdapter adapter;
+	
+	BuscarBDTerremotosAsync buscarTerremotosBD;
+	ObtenerTerremotosAsync buscarTerremotosInternet;
+	
 
 	 @Override
 	 public void onActivityCreated(Bundle savedInstanceState) {
 	        super.onActivityCreated(savedInstanceState);
-	      
-	        bd = TerremotosBD.getDB(getActivity());
-	    	
-	        c=bd.getTerremotoMagnitud(obtenerMagnitud());   
-	        Log.d(TAG, String.valueOf(c.getCount()));
-	        
-	        this.adapter= new ListaTerremotosAdapter(getActivity(), c);
-	        
-	        
-	        
+
+	        this.adapter= new ListaTerremotosAdapter(getActivity(), null);
+
 	        setListAdapter(this.adapter);
+	        
+	        
+	 }
+	 
+	 
+	 @Override
+		public void onResume() {
+		    super.onResume();
+		    
+		    buscarTerremotosBD= new BuscarBDTerremotosAsync(getActivity(), this);
+	        buscarTerremotosInternet= new ObtenerTerremotosAsync(getActivity(), this);
+	        
+	        buscarTerremotosBD.execute();
+	        
 	        descargarNuevosTerremotos();
+		    
 	 }
 
 		
@@ -65,18 +78,12 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 	    	this.adapter.changeCursor(c);
 	    	this.adapter.notifyDataSetChanged();
 	    	*/
-			
-			ObtenerTerremotosAsync asiync= new ObtenerTerremotosAsync(getActivity(), this);
-	    	
-			
+				
 			String path = getString(R.string.url_terremotos);
 			try {
-				URL url = new URL(path);
-				
-				asiync.execute(url);
-				
-				
-				
+				URL url = new URL(path);			
+				buscarTerremotosInternet.execute(url);
+
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -112,14 +119,25 @@ public class FragmentListaTerremotos2 extends ListFragment implements ObtenerTer
 		}
 
 
-		@Override
-		public void actulizarVista() {
-			// se han obtenido nuevos datos de internet
+		
+		public void buscarBD(){
 			
-			c=bd.getTerremotoMagnitud(obtenerMagnitud());   
+	    	//buscar en la BD
+			//buscarTerremotosBD.execute();
+			
+			BuscarBDTerremotosAsync buscar2= new BuscarBDTerremotosAsync(getActivity(), this);
+		}
+		
+		
+		
+		public void actulizarVista(Cursor c) {
+			// se han obtenido nuevos datos de internet
+
 	    	this.adapter.changeCursor(c);
 	    	this.adapter.notifyDataSetChanged();
 			
 		}
 
+
+		
 }
