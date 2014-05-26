@@ -57,7 +57,6 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 			 
 			 Log.d(TAG, "Se ha cambiado la magnitud-->"+magnitud);
 			 
-			 //descargarNuevosTerremotos();
 			 
 		 }else{
 			 Log.d(TAG, "Algo se ha cambiado");

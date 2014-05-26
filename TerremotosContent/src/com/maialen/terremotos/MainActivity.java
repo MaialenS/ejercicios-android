@@ -1,11 +1,19 @@
 package com.maialen.terremotos;
 
 
+import com.maialen.datos.Terremoto;
+import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.preferencias.PreferenciasActivity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
+
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,12 +28,20 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-
 		
+		
+		
+		
+		
+		
+		
+		
+		//cargar los fragmentos
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new FragmentListaTerremotos()).commit();
 		}
+		
 	}
 
 	@Override

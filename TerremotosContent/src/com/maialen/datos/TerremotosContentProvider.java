@@ -1,6 +1,7 @@
 package com.maialen.datos;
 
 import android.content.ContentProvider;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.UriMatcher;
@@ -11,10 +12,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
+import android.util.Log;
 
 public class TerremotosContentProvider extends ContentProvider{
-
-	public static final Uri CONTENT_URI = Uri.parse("content://com.maialen.preferencias.PreferenciasActivity/elements");
+	private static final String TAG="Terremotos";
+	//CUIDADO QUE TIENE QUE ESTAR BIEN PUESTO
+	public static final Uri CONTENT_URI = Uri.parse("content://com.maialen.provider.terremotoscontentprovider/elements");
 	TerremotosDBOpenHelper terremotosHelper;
 	//variables para distinguir los distintos tipos de consultas
 	private static final int ALLROWS = 1;
@@ -49,38 +52,64 @@ public class TerremotosContentProvider extends ContentProvider{
 	}
 
 	@Override
-	public String getType(Uri arg0) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getType(Uri uri) {
+		//PARA SABER QUE TIPO DE COSAS DEVUELVE
+		//ES OBLIGATORIO
+		switch (uriMatcher.match(uri)) {
+		case ALLROWS:
+			return "vnd.android.cursor.dir/vnd.maialen.provider.terremotoscontentprovider";
+		case SINGLE_ROW:
+			return "vnd.android.cursor.item/vnd.maialen.provider.terremotoscontentprovider";
+		default:
+			throw new IllegalArgumentException("Unsupported URI: " + uri);
+		}
 	}
 
 	@Override
-	public Uri insert(Uri arg0, ContentValues arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public Uri insert(Uri arg0, ContentValues values) {
+		// Open a read / write database to support the transaction.
+	    SQLiteDatabase db = terremotosHelper.getWritableDatabase();
+	    // To add empty rows to your database by passing in an empty
+	    // Content Values object you must use the null column hack
+	    // parameter to specify the name of the column that can be
+	    // set to null.
+	    String nullColumnHack = null;
+	    // Insert the values into the table
+	    long id = db.insert(terremotosHelper.DATABASE_TABLE,
+	        nullColumnHack, values);
+	    // Construct and return the URI of the newly inserted row.
+	    if (id > -1) {
+	      // Construct and return the URI of the newly inserted row.
+	      Uri insertedId = ContentUris.withAppendedId(CONTENT_URI, id);
+	      // Notify any observers of the change in the data set.
+	      getContext().getContentResolver().notifyChange(insertedId, null);
+	      return insertedId;
+	    }
+	    else
+	      return null;
 	}
 
 	@Override
 	public boolean onCreate() {
 		// TODO Auto-generated method stub
+		Log.d(TAG,"Content provider onCreate");
 		terremotosHelper = new TerremotosDBOpenHelper(getContext(), TerremotosDBOpenHelper.DATABASE_NAME, null, TerremotosDBOpenHelper.DATABASE_VERSION);
-		
-		
 		return true;
 	}
 
 	@Override
-	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
+	public Cursor query(Uri uri, String[] result_columns, String selection, String[] selectionArgs, String sortOrder) {
 		// TODO Auto-generated method stub
 		Cursor c=null;
-		
+		Log.d(TAG,"haciendo query");
 		//abir la BD con el helper
-		
 		SQLiteDatabase db;
 		try {
 			db = terremotosHelper.getWritableDatabase();
 		} catch (SQLiteException ex) {
+			Log.d(TAG,"fallo al abir la bd en escritura, se intenta en lectura");
 			db = terremotosHelper.getReadableDatabase();
+			
 		}
 		
 		//preparar el constructor de la pregunta
@@ -91,10 +120,12 @@ public class TerremotosContentProvider extends ContentProvider{
 		switch (uriMatcher.match(uri)) {
 		  case SINGLE_ROW :
 			  //obtener lo que pone tras la uri
+			  Log.d(TAG,"SINGLE_ROW");
 		    String rowID = uri.getPathSegments().get(1);
 		    queryBuilder.appendWhere(ID_COLUMN + "=" + rowID);
 		    break;
 		  case ALLROWS:  
+			  Log.d(TAG,"ALLROWS");
 			  break;
 		  default: break;
 		}
@@ -104,7 +135,7 @@ public class TerremotosContentProvider extends ContentProvider{
 		String groupBy=null;
 		String having=null;
 		//ejecutar el query
-		Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, groupBy, having, sortOrder);
+		Cursor cursor = queryBuilder.query(db, result_columns, selection,selectionArgs, groupBy, having, sortOrder);
 		
 		return cursor;
 	}

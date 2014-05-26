@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
+import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.terremotos.R;
 
 public class ListaTerremotosAdapter extends CursorAdapter {
@@ -38,6 +39,7 @@ public class ListaTerremotosAdapter extends CursorAdapter {
 		TextView magnitud;
 		TextView lugar;
 		TextView fecha;
+		//TextView id_bd;
 	}
 
 	@Override
@@ -54,6 +56,7 @@ public class ListaTerremotosAdapter extends CursorAdapter {
 				.findViewById(R.id.textTupaMagnitud);
 		holder.lugar = (TextView) itemView.findViewById(R.id.textTuplaLugar);
 		holder.fecha = (TextView) itemView.findViewById(R.id.textTupaFecha);
+		//holder.id_bd = (TextView) itemView.findViewById(R.id.textTuplaID);
 
 		itemView.setTag(holder);
 		return itemView;
@@ -64,20 +67,23 @@ public class ListaTerremotosAdapter extends CursorAdapter {
 		final ViewHolder holder = (ViewHolder) view.getTag();
 
 		// poner los valores en la tupla
-/*
+
 		String magnitud = cursor.getString(cursor
-				.getColumnIndex(TerremotosDBOpenHelper.MAGNITUDE_COLUMN));
+				.getColumnIndex(TerremotosContentProvider.MAGNITUDE_COLUMN));
 		String lugar = cursor.getString(cursor
-				.getColumnIndex(TerremotosDBOpenHelper.PLACE_COLUMN));
+				.getColumnIndex(TerremotosContentProvider.PLACE_COLUMN));
 
 		long fechaLong = cursor.getLong(cursor
-				.getColumnIndex(TerremotosDBOpenHelper.TIME_COLUMN));
+				.getColumnIndex(TerremotosContentProvider.TIME_COLUMN));
 		String fechaFormateada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				.format(new Date(fechaLong));
+		
+		int id_bd = cursor.getInt(cursor.getColumnIndex(TerremotosContentProvider.ID_COLUMN));
 
 		holder.magnitud.setText(magnitud);
 		holder.lugar.setText(lugar);
 		holder.fecha.setText(fechaFormateada);
-*/
+		//holder.id_bd.setText(id_bd);
+
 	}
 }
