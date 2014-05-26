@@ -1,11 +1,13 @@
 package com.maialen.terremotos;
 
 import com.maialen.adaptadores.ListaTerremotosAdapter;
+import com.maialen.datos.TerremotosContentProvider;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.maialen.preferencias.PreferenciasActivity;
+
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -20,15 +22,16 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class FragmentListaTerremotos2 extends ListFragment {
+public class FragmentListaTerremotos extends ListFragment {
 	static final String STATE_ACTIVIDAD = "estadoActividad";
 	private static final String TAG="Terremotos";
-//	private SimpleCursorAdapter mAdapter;
+
 	
 	static final String STATE_LISTADO = "estadoListado";
 
 	private ListaTerremotosAdapter adapter;
 
+	private TerremotosContentProvider provider;
 	
 	
 	
@@ -40,6 +43,8 @@ public class FragmentListaTerremotos2 extends ListFragment {
 	        this.adapter= new ListaTerremotosAdapter(getActivity(), null);
 
 	        setListAdapter(this.adapter);
+	        
+	        provider= new TerremotosContentProvider();
 
 	        
 	 }
@@ -60,6 +65,29 @@ public class FragmentListaTerremotos2 extends ListFragment {
 		    */
 		    
 		    
+
+		    
+		    String[] projection={
+		    		TerremotosContentProvider.ID_COLUMN,
+		    		TerremotosContentProvider.ID_TERREMOTO,
+		    		TerremotosContentProvider.PLACE_COLUMN,
+		    		TerremotosContentProvider.TIME_COLUMN,
+		    		TerremotosContentProvider.DETAIL_COLUMN,
+		    		TerremotosContentProvider.MAGNITUDE_COLUMN,
+		    		TerremotosContentProvider.LAT_COLUMN,
+		    		TerremotosContentProvider.LON_COLUMN,
+		    		TerremotosContentProvider.URL_COLUMN,
+		    		TerremotosContentProvider.URL_COLUMN
+		    		
+		    };
+			String selection="";
+			String[] selectionArgs={""};
+			String sortOrder=TerremotosContentProvider.TIME_COLUMN;
+			Cursor c= provider.query(TerremotosContentProvider.CONTENT_URI, projection, selection, selectionArgs, sortOrder);
+		    
+			this.adapter.changeCursor(c);
+	    	this.adapter.notifyDataSetChanged();
+			
 	 }
 
 	

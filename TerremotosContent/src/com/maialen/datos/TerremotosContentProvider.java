@@ -95,7 +95,6 @@ public class TerremotosContentProvider extends ContentProvider{
 		    queryBuilder.appendWhere(ID_COLUMN + "=" + rowID);
 		    break;
 		  case ALLROWS:  
-			  
 			  break;
 		  default: break;
 		}
@@ -104,6 +103,7 @@ public class TerremotosContentProvider extends ContentProvider{
 		
 		String groupBy=null;
 		String having=null;
+		//ejecutar el query
 		Cursor cursor = queryBuilder.query(db, projection, selection,selectionArgs, groupBy, having, sortOrder);
 		
 		return cursor;
