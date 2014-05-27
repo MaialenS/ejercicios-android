@@ -27,9 +27,7 @@
             android:id="@+id/textDetalleMagnitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:layout_marginRight="5dp"
-           
             android:background="@drawable/tupla_magnitud"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textColor="@color/blanco"
@@ -43,6 +41,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall" 
         android:layout_marginLeft="6dp"/>
+     
      <TextView
         android:id="@+id/textDetalleDetalle"
         android:layout_width="match_parent"
