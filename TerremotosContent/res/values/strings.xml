@@ -7,41 +7,38 @@
     <string name="url_terremotos">http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_hour.geojson</string>
     <string name="title_activity_preferencias">PreferenciasActivity</string>
     <string name="action_refresh">refrescar</string>
-
-    
     <string name="autorefresh">Autorefresh</string>
     <string name="autorefresh_descripcion">Activado refresca los datos de la aplicacion</string>
-    
     <string name="Intervalos">Intervalos de tiempo</string>
     <string name="Periodos">Periodos de tiempo</string>
+
     <string-array name="array_internal_values">
-		<item>1</item>
-		<item>5</item>
-		<item>15</item>
-	</string-array>
-    
+        <item>1</item>
+        <item>5</item>
+        <item>15</item>
+    </string-array>
     <string-array name="array_internal">
-		<item>1 min</item>
-		<item>5 min</item>
-		<item>15 min</item>
-	</string-array>
-	
+        <item>1 min</item>
+        <item>5 min</item>
+        <item>15 min</item>
+    </string-array>
+
     <string name="Magnitud">Magnitud</string>
     <string name="Magnitudes">Selecciona una magnitud minima</string>
-    
+
     <string-array name="array_magnitudes">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-		<item>5</item>
-		<item>6</item>
-		<item>7</item>
-		<item>8</item>
-		<item>9</item>
-	</string-array>
-	
-    
-    
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+
+    <string name="title_activity_detalle_terremoto">DetalleTerremoto</string>
+
 </resources>

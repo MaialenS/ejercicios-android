@@ -28,12 +28,16 @@
             android:name="com.maialen.preferencias.PreferenciasActivity"
             android:label="@string/title_activity_preferencias" >
         </activity>
-        
-        <provider 
-            android:name="com.maialen.datos.TerremotosContentProvider" 
+
+        <provider
+            android:name="com.maialen.datos.TerremotosContentProvider"
             android:authorities="com.maialen.provider.terremotoscontentprovider"
-            android:exported="false"            />
-        
+            android:exported="false" />
+
+        <activity
+            android:name="com.maialen.terremotos.DetalleTerremoto"
+            android:label="@string/title_activity_detalle_terremoto" >
+        </activity>
     </application>
 
 </manifest>

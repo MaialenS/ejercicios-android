@@ -7,6 +7,8 @@ import java.util.Date;
 
 import android.app.ListFragment;
 import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -15,19 +17,18 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-
 
 import com.maialen.datos.ObtenerTerremotosAsync;
 import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.preferencias.PreferenciasActivity;
 
-public class FragmentListaTerremotos extends ListFragment{
+public class FragmentListaTerremotos extends ListFragment {
 
 	private static final String TAG = "Terremotos";
-	
-	
+
 	private ObtenerTerremotosAsync obtenerTerremotosInternet;
 
 	static final String STATE_LISTADO = "estadoListado";
@@ -79,8 +80,6 @@ public class FragmentListaTerremotos extends ListFragment{
 
 		setListAdapter(this.simpleAdapter);
 
-		
-		
 	}
 
 	@Override
@@ -105,18 +104,37 @@ public class FragmentListaTerremotos extends ListFragment{
 	private void buscarTerremotosCP() {
 		// pruebas del content provider
 		ContentResolver cr = getActivity().getContentResolver();
+		/*
+		 * ///probando update --> OK Uri rowAddress1 =
+		 * ContentUris.withAppendedId(TerremotosContentProvider.CONTENT_URI, 1)
+		 * ;
+		 * 
+		 * ContentValues newValues = new ContentValues(); // Assign values for
+		 * each row. newValues.put(TerremotosContentProvider.ID_TERREMOTO,
+		 * "aaaaa"); newValues.put(TerremotosContentProvider.PLACE_COLUMN,
+		 * "viiiiveeeeeeeeeeeee");
+		 * newValues.put(TerremotosContentProvider.DETAIL_COLUMN, "algo sera");
+		 * 
+		 * String where1 = TerremotosContentProvider.ID_COLUMN+" = ?"; String
+		 * whereArgs1[] = {"1"};
+		 * 
+		 * cr.update(rowAddress1, newValues, where1, whereArgs1);
+		 */
+		/*
+		// /probando delete --> OK
+		Uri rowAddress1 = ContentUris.withAppendedId(
+				TerremotosContentProvider.CONTENT_URI, 1);
 
-		String[] result_columns = { TerremotosContentProvider.ID_COLUMN,
-				TerremotosContentProvider.ID_TERREMOTO,
-				TerremotosContentProvider.PLACE_COLUMN,
-				TerremotosContentProvider.TIME_COLUMN,
-				TerremotosContentProvider.DETAIL_COLUMN,
-				TerremotosContentProvider.MAGNITUDE_COLUMN,
-				TerremotosContentProvider.LAT_COLUMN,
-				TerremotosContentProvider.LON_COLUMN,
-				TerremotosContentProvider.URL_COLUMN
 
-		};
+		String where1 = TerremotosContentProvider.ID_COLUMN + " = ?";
+		String whereArgs1[] = { "1" };
+
+		cr.delete(rowAddress1, where1, whereArgs1);
+		
+		*/
+		
+
+		String[] result_columns = TerremotosContentProvider.ALL_COLUMS;
 
 		// Append a row ID to the URI to address a specific row.
 		// Uri rowAddress
@@ -125,8 +143,8 @@ public class FragmentListaTerremotos extends ListFragment{
 		Uri rowAddress = TerremotosContentProvider.CONTENT_URI;
 
 		// Replace these with valid SQL statements as necessary.
-		String where = TerremotosContentProvider.MAGNITUDE_COLUMN+" >= ?";
-		String whereArgs[] = {String.valueOf(obtenerMagnitud())};
+		String where = TerremotosContentProvider.MAGNITUDE_COLUMN + " >= ?";
+		String whereArgs[] = { String.valueOf(obtenerMagnitud()) };
 		String order = TerremotosContentProvider.TIME_COLUMN + " DESC";
 		// Return the specified rows.
 		Cursor resultCursor = cr.query(rowAddress, result_columns, where,
@@ -172,6 +190,10 @@ public class FragmentListaTerremotos extends ListFragment{
 		Log.d(TAG, "magnitud de los settings -->" + mag);
 		return mag;
 
+	}
+	
+	public void onListItemClick (ListView l, View v, int position, long id){
+		Log.d(TAG, "CLICK -->"+position+"   "+id);
 	}
 
 }
