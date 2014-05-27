@@ -10,6 +10,7 @@ import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -28,10 +29,14 @@ import com.maialen.datos.ObtenerTerremotosAsync;
 import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.preferencias.PreferenciasActivity;
 
+
 public class FragmentListaTerremotos extends ListFragment implements LoaderCallbacks<Cursor>{
 
 	private static final String TAG = "Terremotos";
 	private static final int LOADER_TERREMOTOS = 1;
+	static final String TERREMOTO_SELECCIONADO="id_terremoto";
+	private static final int SHOW_DETAIL=1;
+	
 	
 	private ObtenerTerremotosAsync obtenerTerremotosInternet;
 	private SimpleCursorAdapter simpleAdapter;
@@ -176,6 +181,15 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 	
 	public void onListItemClick (ListView l, View v, int position, long id){
 		Log.d(TAG, "CLICK -->"+position+"   "+id);
+		
+		
+		//para poder acceder al this de una clase en una instancia interna  NombreClase.this
+    	Intent intent= new Intent(getActivity(), DetalleTerremoto.class);	    	
+    	//pasar los datos al intent
+    	intent.putExtra(TERREMOTO_SELECCIONADO, id);
+    	
+		startActivityForResult(intent, SHOW_DETAIL);
+		
 	}
 
 
