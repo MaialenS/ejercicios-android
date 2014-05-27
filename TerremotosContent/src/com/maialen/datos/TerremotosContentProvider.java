@@ -104,6 +104,8 @@ public class TerremotosContentProvider extends ContentProvider {
 
 	@Override
 	public Uri insert(Uri arg0, ContentValues values) {
+		
+		
 		// abrir la BD en modo escritura
 		SQLiteDatabase db = terremotosHelper.getWritableDatabase();
 		// To add empty rows to your database by passing in an empty
@@ -122,7 +124,7 @@ public class TerremotosContentProvider extends ContentProvider {
 			//MUY IMPORTANTE
 			// notificar a quien escuche que hay cambios en la BD
 			getContext().getContentResolver().notifyChange(insertedId, null);
-			
+//			Log.d(TAG, "Content Provider notifyChange()");
 			
 			return insertedId;
 		} else
@@ -132,7 +134,7 @@ public class TerremotosContentProvider extends ContentProvider {
 	@Override
 	public boolean onCreate() {
 		// TODO Auto-generated method stub
-		Log.d(TAG, "Content provider onCreate");
+		//Log.d(TAG, "Content provider onCreate");
 		terremotosHelper = new TerremotosDBOpenHelper(getContext(),
 				TerremotosDBOpenHelper.DATABASE_NAME, null,
 				TerremotosDBOpenHelper.DATABASE_VERSION);
@@ -183,6 +185,9 @@ public class TerremotosContentProvider extends ContentProvider {
 		// ejecutar el query
 		Cursor cursor = queryBuilder.query(db, result_columns, selection,
 				selectionArgs, groupBy, having, sortOrder);
+		
+		//avisar a los que quieren esto de que puede cambiar
+		cursor.setNotificationUri(getContext().getContentResolver(), uri);
 
 		return cursor;
 	}
@@ -209,6 +214,7 @@ public class TerremotosContentProvider extends ContentProvider {
 		int updateCount = db.update(terremotosHelper.DATABASE_TABLE, values,
 				selection, selectionArgs);
 		// Notify any observers of the change in the data set.
+		
 		getContext().getContentResolver().notifyChange(uri, null);
 
 		return updateCount;

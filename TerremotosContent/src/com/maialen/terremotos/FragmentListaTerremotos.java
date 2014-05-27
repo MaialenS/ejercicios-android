@@ -6,17 +6,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.ListFragment;
+import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -25,19 +28,40 @@ import com.maialen.datos.ObtenerTerremotosAsync;
 import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.preferencias.PreferenciasActivity;
 
-public class FragmentListaTerremotos extends ListFragment {
+public class FragmentListaTerremotos extends ListFragment implements LoaderCallbacks<Cursor>{
 
 	private static final String TAG = "Terremotos";
-
+	private static final int LOADER_TERREMOTOS = 1;
+	
 	private ObtenerTerremotosAsync obtenerTerremotosInternet;
-
-	static final String STATE_LISTADO = "estadoListado";
 	private SimpleCursorAdapter simpleAdapter;
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
+	private SimpleCursorAdapter.ViewBinder fechaViewBlinder= new SimpleCursorAdapter.ViewBinder(){
 
+		@Override
+		public boolean setViewValue(View view, Cursor cursor,
+				int columnIndex) {
+			// TODO Auto-generated method stub
+			int esFecha = cursor
+					.getColumnIndexOrThrow(TerremotosContentProvider.TIME_COLUMN);
+			if (columnIndex == esFecha) {
+				// formatear la fecha
+				TextView textFecha = (TextView) view;
+				long fechaLong = cursor.getLong(cursor
+						.getColumnIndex(TerremotosContentProvider.TIME_COLUMN));
+				String fechaFormateada = new SimpleDateFormat(
+						"yyyy-MM-dd HH:mm:ss").format(new Date(fechaLong));
+				textFecha.setText(fechaFormateada);
+				return true;
+
+			}
+
+			return false;
+		}
+		
+	};
+	
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		String[] from = new String[] {
 				TerremotosContentProvider.MAGNITUDE_COLUMN,
 				TerremotosContentProvider.PLACE_COLUMN,
@@ -50,46 +74,35 @@ public class FragmentListaTerremotos extends ListFragment {
 
 		// Now create an array adapter and set it to display using our row
 		simpleAdapter = new SimpleCursorAdapter(getActivity(),
-				R.layout.tupla_terremoto, null, from, to);
+				R.layout.tupla_terremoto, null, from, to, 0);
 
-		simpleAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
-			@Override
-			public boolean setViewValue(View view, Cursor cursor,
-					int columnIndex) {
-				// TODO Auto-generated method stub
-				int esFecha = cursor
-						.getColumnIndexOrThrow(TerremotosContentProvider.TIME_COLUMN);
-				if (columnIndex == esFecha) {
-					// formatear la fecha
-					TextView textFecha = (TextView) view;
-					long fechaLong = cursor.getLong(cursor
-							.getColumnIndex(TerremotosContentProvider.TIME_COLUMN));
-					String fechaFormateada = new SimpleDateFormat(
-							"yyyy-MM-dd HH:mm:ss").format(new Date(fechaLong));
-					textFecha.setText(fechaFormateada);
-					return true;
-
-				}
-
-				return false;
-			}
-
-		});
-
-		// this.adapter= new ListaTerremotosAdapter(getActivity(), null);
-
+		simpleAdapter.setViewBinder(fechaViewBlinder);
+		// si no se hace aqui aparece el loading
 		setListAdapter(this.simpleAdapter);
+		
+		return super.onCreateView(inflater, container, savedInstanceState);
+	};
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		//para poner el loader de los datos
+		getLoaderManager().initLoader(LOADER_TERREMOTOS, null, this);
 
 	}
-
+	
 	@Override
 	public void onResume() {
 		super.onResume();
 
 		obtenerTerremotosInternet = new ObtenerTerremotosAsync(getActivity());
 
-		buscarTerremotosCP();
+		//buscarTerremotosCP();
 
+//		setListAdapter(this.simpleAdapter);
+		
+		getLoaderManager().restartLoader(LOADER_TERREMOTOS, null, this);
 		descargarNuevosTerremotos();
 
 	}
@@ -104,36 +117,7 @@ public class FragmentListaTerremotos extends ListFragment {
 	private void buscarTerremotosCP() {
 		// pruebas del content provider
 		ContentResolver cr = getActivity().getContentResolver();
-		/*
-		 * ///probando update --> OK Uri rowAddress1 =
-		 * ContentUris.withAppendedId(TerremotosContentProvider.CONTENT_URI, 1)
-		 * ;
-		 * 
-		 * ContentValues newValues = new ContentValues(); // Assign values for
-		 * each row. newValues.put(TerremotosContentProvider.ID_TERREMOTO,
-		 * "aaaaa"); newValues.put(TerremotosContentProvider.PLACE_COLUMN,
-		 * "viiiiveeeeeeeeeeeee");
-		 * newValues.put(TerremotosContentProvider.DETAIL_COLUMN, "algo sera");
-		 * 
-		 * String where1 = TerremotosContentProvider.ID_COLUMN+" = ?"; String
-		 * whereArgs1[] = {"1"};
-		 * 
-		 * cr.update(rowAddress1, newValues, where1, whereArgs1);
-		 */
-		/*
-		// /probando delete --> OK
-		Uri rowAddress1 = ContentUris.withAppendedId(
-				TerremotosContentProvider.CONTENT_URI, 1);
-
-
-		String where1 = TerremotosContentProvider.ID_COLUMN + " = ?";
-		String whereArgs1[] = { "1" };
-
-		cr.delete(rowAddress1, where1, whereArgs1);
 		
-		*/
-		
-
 		String[] result_columns = TerremotosContentProvider.ALL_COLUMS;
 
 		// Append a row ID to the URI to address a specific row.
@@ -157,15 +141,13 @@ public class FragmentListaTerremotos extends ListFragment {
 			Log.d(TAG, "el cursor NO es null " + resultCursor.getCount());
 
 		}
-
-		this.simpleAdapter.changeCursor(resultCursor);
-		this.simpleAdapter.notifyDataSetChanged();
+		
 
 	}
 
 	public void descargarNuevosTerremotos() {
 
-		String path = getString(R.string.url_terremotos);
+		String path = getString(R.string.url2);
 		try {
 			URL url = new URL(path);
 			obtenerTerremotosInternet.execute(url);
@@ -194,6 +176,53 @@ public class FragmentListaTerremotos extends ListFragment {
 	
 	public void onListItemClick (ListView l, View v, int position, long id){
 		Log.d(TAG, "CLICK -->"+position+"   "+id);
+	}
+
+
+//////////////////////METODOS PARA EL LOADER MANAGER////////////////////
+
+
+	@Override
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		
+		
+		Log.d(TAG, "Loader onCreateLoader");
+		
+		String[] result_columns = TerremotosContentProvider.ALL_COLUMS;
+		String where = TerremotosContentProvider.MAGNITUDE_COLUMN + " >= ?";
+		String whereArgs[] = { String.valueOf(obtenerMagnitud()) };
+		String order = TerremotosContentProvider.TIME_COLUMN + " DESC";
+		
+		
+		CursorLoader loader = new CursorLoader(getActivity(),
+				TerremotosContentProvider.CONTENT_URI, result_columns, where, whereArgs, order);
+		return loader;
+	}
+
+
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+
+		Log.d(TAG, "Loader onLoadFinished");
+		
+		//simpleAdapter.swapCursor(cursor);
+		this.simpleAdapter.changeCursor(cursor);
+		
+	}
+
+
+
+
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> arg0) {
+		Log.d(TAG, "Loader onLoaderReset");
+		
+		this.simpleAdapter.changeCursor(null);
+		
+		//simpleAdapter.swapCursor(null);
+		
 	}
 
 }

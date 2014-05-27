@@ -36,7 +36,7 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 
 
 	public ObtenerTerremotosAsync(Context contex) {
-		Log.d(TAG, "ObtenerTerremotosAsync constructor");
+		//Log.d(TAG, "ObtenerTerremotosAsync constructor");
 
 		
 		this.contex = contex;
@@ -47,7 +47,7 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 	protected Long doInBackground(URL... arg0) {
 		// TODO Auto-generated method stub
 
-		Log.d(TAG, "doInBackground");
+		//Log.d(TAG, "ObtenerTerremotosAsync doInBackground");
 
 		url =arg0[0];
 
@@ -59,20 +59,18 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 
 	@Override
 	protected void onProgressUpdate(Integer... progress) {
-		Log.d(TAG, "onPostExecute");
+		//Log.d(TAG, "ObtenerTerremotosAsync onPostExecute");
 	}
 
 	@Override
 	protected void onPostExecute(Long result) {
-		Log.d(TAG, "onProgressUpdate");
-		
-		
+		//Log.d(TAG, "ObtenerTerremotosAsync onProgressUpdate");
 
 	}
 
 	@Override
 	protected void onPreExecute() {
-		Log.d(TAG, "onPreExecute");
+		//Log.d(TAG, "ObtenerTerremotosAsync onPreExecute");
 	}
 
 	// ////////funciones utiles///////////////
@@ -105,7 +103,7 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 
 			JSONArray arrayTerremotos = json.getJSONArray("features");
 
-			// Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
+			Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
 
 			for (int i = 0; i < arrayTerremotos.length(); i++) {
 				JSONObject eq = arrayTerremotos.getJSONObject(i);
@@ -121,10 +119,6 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 						(float) coordenadas.getDouble(1),
 						(float) coordenadas.getDouble(0),
 						propiedades.getString("url"));
-
-				// guardarlo donde sea
-				// Log.d(TAG, t.toString());
-				//bd.insertarTerremoto(t);
 				
 				insertarTerremoto(t);
 
@@ -172,7 +166,7 @@ public class ObtenerTerremotosAsync extends AsyncTask<URL, Integer, Long> {
 	   
 		
 		Uri insertado= cr.insert(TerremotosContentProvider.CONTENT_URI, newValues);
-		Log.d(TAG,"insertando--> "+insertado);
+		
 	}
 	
 	

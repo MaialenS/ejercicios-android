@@ -6,16 +6,20 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content" 
+        android:layout_margin="2dp">
 
         <TextView
             android:id="@+id/textTupaMagnitud"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            
             android:layout_marginRight="5dp"
+           
             android:background="@drawable/tupla_magnitud"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/blanco" />
+            android:textColor="@color/blanco"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textTuplaLugar"
@@ -31,14 +35,8 @@
         android:id="@+id/textTupaFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:layout_marginLeft="6dp"/>
 
-    <TextView
-        android:id="@+id/textTuplaID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:visibility="gone" />
 
 </LinearLayout>

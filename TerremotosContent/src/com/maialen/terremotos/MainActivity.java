@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 		//cargar los fragmentos
 		if (savedInstanceState == null) {
 			getFragmentManager().beginTransaction()
-					.add(R.id.container, new FragmentListaTerremotos()).commit();
+					.add(R.id.container, new FragmentListaTerremotos(), "list").commit();
 		}
 		
 	}
@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 			startActivity(i);
 			
 			return true;
-		}
+		} 
 		return super.onOptionsItemSelected(item);
 	}
 

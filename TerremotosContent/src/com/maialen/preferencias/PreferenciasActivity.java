@@ -63,4 +63,6 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 		 }
 		
 	}
+	
+	
 }

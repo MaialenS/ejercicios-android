@@ -3,6 +3,9 @@
      <color name="red">#ffff0000</color>
     <color name="gris">#424242</color>
     <color name="blanco">#FFF</color>
+    <color name="negro">#000</color>
     <color name="azul_oscuro">#333366</color>
+    <color name="naranja">#F3BE00</color>
+    <color name="naranja_oscuro">#F3A400</color>
 
 </resources>
