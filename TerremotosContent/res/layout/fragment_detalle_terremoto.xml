@@ -10,49 +10,102 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.maialen.terremotos.DetalleTerremoto$PlaceholderFragment" >
 
+    <TextView
+        android:id="@+id/textDetalleLugar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tupla_magnitud"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/blanco"
+        android:textStyle="bold" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-        
-        
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="6dp">
+
         <TextView
-            android:id="@+id/textDetalleLugar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-        
-        <TextView
-            android:id="@+id/textDetalleMagnitud"
+            android:id="@+id/textMagnitud"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@drawable/tupla_magnitud"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/blanco"
-            android:textStyle="bold" />
+            android:text="@string/Magnitud"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
+        <TextView
+        android:id="@+id/textDetalleMagnitud"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginLeft="6dp"
+         />
+        
     </LinearLayout>
     
-     <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="6dp">
+
+        <TextView
+            android:id="@+id/textFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Fecha"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
         android:id="@+id/textDetalleFecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall" 
-        android:layout_marginLeft="6dp"/>
-     
-     <TextView
-        android:id="@+id/textDetalleDetalle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall" 
-        android:layout_marginLeft="6dp"/>
+        android:layout_marginLeft="6dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+        
+    </LinearLayout>
 
-     <Button
-         android:id="@+id/btnDetalleUrl"
-         android:layout_width="286dp"
-         android:layout_height="wrap_content"
-         android:text="Button" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="6dp">
+
+        <TextView
+            android:id="@+id/textLatitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Latitud"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textDetalleLatitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="6dp">
+
+        <TextView
+            android:id="@+id/textLongitud"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/Longitud"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:id="@+id/textDetalleLongitud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall" 
+            android:layout_marginLeft="6dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnDetalleUrl"
+        android:layout_width="286dp"
+        android:layout_height="wrap_content"
+        android:text="Button" />
 
 </LinearLayout>

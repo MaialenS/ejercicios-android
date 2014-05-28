@@ -29,7 +29,7 @@ import android.widget.TextView;
 public class FragmentDetalleTerremoto extends Fragment implements LoaderCallbacks<Cursor>{
 
 	private static final String TAG = "Terremotos";
-	private static final int LOADER_DETALLE = 1;
+	private static final int LOADER_DETALLE = 2;
 	
 	private long id_terremoto;
 	
@@ -39,8 +39,9 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	private TextView lugar;
 	private TextView magnitud;
 	private TextView fecha;
-	private TextView detalle;
-	
+	private TextView latitud;
+	private TextView longitud;
+
 	
 	
 	
@@ -63,8 +64,9 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 		
 	    lugar= (TextView) v.findViewById(R.id.textDetalleLugar);
 	    fecha= (TextView) v.findViewById(R.id.textDetalleFecha);
-	    detalle= (TextView) v.findViewById(R.id.textDetalleDetalle);
 	    magnitud= (TextView) v.findViewById(R.id.textDetalleMagnitud);
+	    latitud= (TextView) v.findViewById(R.id.textDetalleLatitud);
+	    longitud= (TextView) v.findViewById(R.id.textDetalleLongitud);
 
 
 		return v;
@@ -102,15 +104,10 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		// TODO Auto-generated method stub
 		
-		String[] result_columns = TerremotosContentProvider.ALL_COLUMS;
-		String where = TerremotosContentProvider.ID_COLUMN + " = ?";
-		String whereArgs[] = { String.valueOf(id_terremoto) };
-		String order = null;
-		
 		Uri uri=ContentUris.withAppendedId(TerremotosContentProvider.CONTENT_URI,id_terremoto );
 		
 		CursorLoader loader = new CursorLoader(getActivity(),
-				uri, result_columns, where, whereArgs, order);
+				uri, TerremotosContentProvider.ALL_COLUMS, null, null, null);
 		return loader;
 	}
 
@@ -119,30 +116,37 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
 		// TODO Auto-generated method stub
-		cursor.moveToFirst();
-		//coger los datos
-		String magnitudS = cursor.getString(cursor
-				.getColumnIndex(TerremotosContentProvider.MAGNITUDE_COLUMN));
-		String lugarS = cursor.getString(cursor
-				.getColumnIndex(TerremotosContentProvider.PLACE_COLUMN));
-
-		long fechaLong = cursor.getLong(cursor
-				.getColumnIndex(TerremotosContentProvider.TIME_COLUMN));
-		String fechaFormateada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(new Date(fechaLong));
-				
-		String detalleS =cursor.getString(cursor
-				.getColumnIndex(TerremotosContentProvider.DETAIL_COLUMN));
-		
-		stringURL= cursor.getString(cursor
-				.getColumnIndex(TerremotosContentProvider.URL_COLUMN));
-		
-		//pintar los datos
-		
-		lugar.setText(lugarS);
-		magnitud.setText(magnitudS);
-		fecha.setText(fechaFormateada);
-		detalle.setText(detalleS);
+	
+		if(cursor.moveToFirst()){
+			//coger los datos
+			String magnitudS = cursor.getString(cursor
+					.getColumnIndex(TerremotosContentProvider.MAGNITUDE_COLUMN));
+			String lugarS = cursor.getString(cursor
+					.getColumnIndex(TerremotosContentProvider.PLACE_COLUMN));
+	
+			long fechaLong = cursor.getLong(cursor
+					.getColumnIndex(TerremotosContentProvider.TIME_COLUMN));
+			String fechaFormateada = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+					.format(new Date(fechaLong));
+			
+			stringURL= cursor.getString(cursor
+					.getColumnIndex(TerremotosContentProvider.URL_COLUMN));
+			
+			String lat = cursor.getString(cursor
+					.getColumnIndex(TerremotosContentProvider.LAT_COLUMN));
+			String lon = cursor.getString(cursor
+					.getColumnIndex(TerremotosContentProvider.LON_COLUMN));
+			
+			//pintar los datos
+			
+			lugar.setText(lugarS);
+			magnitud.setText(magnitudS);
+			fecha.setText(fechaFormateada);
+			latitud.setText(lat);
+			longitud.setText(lon);
+	
+			Log.d(TAG, "url->"+stringURL);
+		}
 		
 	}
 

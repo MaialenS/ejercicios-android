@@ -12,6 +12,11 @@
     <string name="autorefresh_descripcion">Activado refresca los datos de la aplicacion</string>
     <string name="Intervalos">Intervalos de tiempo</string>
     <string name="Periodos">Periodos de tiempo</string>
+    
+    
+    <string name="Latitud">Latitud</string>
+    <string name="Longitud">Longitud</string>
+    <string name="Fecha">Fecha</string>
 
     <string-array name="array_internal_values">
         <item>1</item>

@@ -1,0 +1,65 @@
+package com.maialen.servicios;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import com.maialen.datos.DescargarTerremotos;
+import com.maialen.terremotos.R;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+
+
+
+public class ServicioBusquedaTerremotos extends Service{
+
+	
+	////////////funciones para el servicio//////////
+	
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		descargarNuevosTerremotos();
+	
+	    return Service.START_NOT_STICKY;
+	}
+	
+	
+	@Override
+	public IBinder onBind(Intent intent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	////////////funciones para obtener los datos///////////////
+
+	private void descargarNuevosTerremotos(){
+		Thread t= new Thread(new Runnable(){
+			public void run() {
+				
+				descargarDatos();
+				
+			}
+		});
+		t.start();
+		
+		stopSelf();
+	}
+	
+	private void descargarDatos(){
+		try {
+			String path = getString(R.string.url_terremotos);
+			URL url = new URL(path);
+			DescargarTerremotos descTerremotos= new DescargarTerremotos(url, this);
+			descTerremotos.descargarDatos();
+
+		} catch (MalformedURLException e) {
+
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+}

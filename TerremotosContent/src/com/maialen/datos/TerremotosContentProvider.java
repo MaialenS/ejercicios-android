@@ -231,27 +231,16 @@ public class TerremotosContentProvider extends ContentProvider {
 		private static final String DATABASE_CREATE = "CREATE TABLE IF NOT EXISTS "
 				+ DATABASE_TABLE
 				+ " ( "
-				+ ID_COLUMN
-				+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ ID_TERREMOTO
-				+ " TEXT UNIQUE, "
-				+ PLACE_COLUMN
-				+ " TEXT, "
-				+ TIME_COLUMN
-				+ " DATETIME, "
-				+ DETAIL_COLUMN
-				+ " TEXT, "
-				+ MAGNITUDE_COLUMN
-				+ " REAL, "
-				+ LAT_COLUMN
-				+ " REAL, "
-				+ LON_COLUMN
-				+ " REAL, "
-				+ URL_COLUMN
-				+ " TEXT, "
-				+ " DATETIME, "
-				+ UPDATED_AT_COLUMN
-				+ " DATETIME);";
+				+ ID_COLUMN+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ ID_TERREMOTO+ " TEXT UNIQUE, "
+				+ PLACE_COLUMN+ " TEXT, "
+				+ TIME_COLUMN+ " DATETIME, "
+				+ DETAIL_COLUMN+ " TEXT, "
+				+ MAGNITUDE_COLUMN+ " REAL, "
+				+ LAT_COLUMN+ " REAL, "
+				+ LON_COLUMN+ " REAL, "
+				+ URL_COLUMN+ " TEXT, "
+				+UPDATED_AT_COLUMN+ " DATETIME);";
 
 		public TerremotosDBOpenHelper(Context context, String name,
 				CursorFactory factory, int version) {

@@ -37,8 +37,6 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 	static final String TERREMOTO_SELECCIONADO="id_terremoto";
 	private static final int SHOW_DETAIL=1;
 	
-	
-	private ObtenerTerremotosAsync obtenerTerremotosInternet;
 	private SimpleCursorAdapter simpleAdapter;
 
 	private SimpleCursorAdapter.ViewBinder fechaViewBlinder= new SimpleCursorAdapter.ViewBinder(){
@@ -101,14 +99,9 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 	public void onResume() {
 		super.onResume();
 
-		obtenerTerremotosInternet = new ObtenerTerremotosAsync(getActivity());
-
-		//buscarTerremotosCP();
-
-//		setListAdapter(this.simpleAdapter);
 		
 		getLoaderManager().restartLoader(LOADER_TERREMOTOS, null, this);
-		descargarNuevosTerremotos();
+
 
 	}
 
@@ -146,12 +139,12 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 			Log.d(TAG, "el cursor NO es null " + resultCursor.getCount());
 
 		}
-		
 
 	}
 
 	public void descargarNuevosTerremotos() {
-
+		ObtenerTerremotosAsync obtenerTerremotosInternet = new ObtenerTerremotosAsync(getActivity());
+		Log.d(TAG, "descargar nuevos terremotos");
 		String path = getString(R.string.url2);
 		try {
 			URL url = new URL(path);
@@ -171,10 +164,10 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		Log.d(TAG, "buscando la magnitud");
+		//Log.d(TAG, "buscando la magnitud");
 		float mag = (float) Double.parseDouble(prefs.getString(
 				PreferenciasActivity.KEY_PREF_MAGNITUD, "0"));
-		Log.d(TAG, "magnitud de los settings -->" + mag);
+		//Log.d(TAG, "magnitud de los settings -->" + mag);
 		return mag;
 
 	}
@@ -224,10 +217,6 @@ public class FragmentListaTerremotos extends ListFragment implements LoaderCallb
 		this.simpleAdapter.changeCursor(cursor);
 		
 	}
-
-
-
-
 
 	@Override
 	public void onLoaderReset(Loader<Cursor> arg0) {

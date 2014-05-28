@@ -4,10 +4,10 @@ package com.maialen.terremotos;
 import com.maialen.datos.Terremoto;
 import com.maialen.datos.TerremotosContentProvider;
 import com.maialen.preferencias.PreferenciasActivity;
+import com.maialen.servicios.ServicioBusquedaTerremotos;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 	
 	private static final String TAG="Terremotos";
 	
-
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class MainActivity extends Activity {
 		
 		//cargar los fragmentos
 		if (savedInstanceState == null) {
+			
 			getFragmentManager().beginTransaction()
 					.add(R.id.container, new FragmentListaTerremotos(), "list").commit();
 		}
@@ -62,7 +63,15 @@ public class MainActivity extends Activity {
 			startActivity(i);
 			
 			return true;
-		} 
+		} else if(id == R.id.action_refresh){
+			//refrescar los terremotos
+			//((FragmentListaTerremotos)(getFragmentManager().findFragmentById(R.id.container))).descargarNuevosTerremotos();;
+		
+			// Explicitly start My Service
+			Intent intent = new Intent(this, ServicioBusquedaTerremotos.class);
+			startService(intent);
+			
+		}
 		return super.onOptionsItemSelected(item);
 	}
 
