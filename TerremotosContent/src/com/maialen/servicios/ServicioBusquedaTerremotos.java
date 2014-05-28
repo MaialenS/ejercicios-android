@@ -9,11 +9,12 @@ import com.maialen.terremotos.R;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 
 
 public class ServicioBusquedaTerremotos extends Service{
-
+	private static final String TAG="Terremotos";
 	
 	////////////funciones para el servicio//////////
 	
@@ -26,7 +27,7 @@ public class ServicioBusquedaTerremotos extends Service{
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		
+		Log.d(TAG, "servicio descargando nuevos terremotos");
 		descargarNuevosTerremotos();
 	
 	    //return Service.START_NOT_STICKY;

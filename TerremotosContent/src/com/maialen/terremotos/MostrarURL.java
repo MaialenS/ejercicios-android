@@ -77,6 +77,8 @@ public class MostrarURL extends Activity {
 			
 			webView= (WebView) v.findViewById(R.id.webViewDetalle);
 			
+			
+			
 			 Intent intent = getActivity().getIntent();
 			 if (intent!=null){
 				  

@@ -47,6 +47,14 @@
             android:name="com.maialen.terremotos.MostrarURL"
             android:label="@string/title_activity_mostrar_url" >
         </activity>
+        
+        <receiver android:name="com.maialen.datos.AlarmaBuscarTerremotos" 
+         >
+            <intent-filter>
+                <action android:name="com.maialen.ACTION_EARTHQUAKE_ALARM"/>
+                
+            </intent-filter>        
+        </receiver>
     </application>
 
 </manifest>
