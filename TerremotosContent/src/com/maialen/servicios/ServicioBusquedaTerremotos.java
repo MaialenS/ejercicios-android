@@ -18,16 +18,25 @@ public class ServicioBusquedaTerremotos extends Service{
 	////////////funciones para el servicio//////////
 	
 	@Override
+	public void onCreate() {
+		super.onCreate();
+		
+	};
+	
+	
+	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
+		
 		descargarNuevosTerremotos();
 	
-	    return Service.START_NOT_STICKY;
+	    //return Service.START_NOT_STICKY;
+	    return super.onStartCommand(intent, flags, startId);
 	}
 	
 	
 	@Override
 	public IBinder onBind(Intent intent) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -44,6 +53,8 @@ public class ServicioBusquedaTerremotos extends Service{
 		});
 		t.start();
 		
+		
+		//para que se termine la ejecucion de la clase
 		stopSelf();
 	}
 	
