@@ -5,7 +5,6 @@ import com.maialen.servicios.ServicioBusquedaTerremotos;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 public class AlarmaBuscarTerremotos extends BroadcastReceiver{
 	
@@ -18,11 +17,12 @@ public class AlarmaBuscarTerremotos extends BroadcastReceiver{
 		
 		String action = intent.getAction();
 		
-		Log.d("Terremotos", "AAAAAAAAAHHHHHHHHHHH");
 		
+		if (action.equals("android.intent.action.PHONE_STATE")){
+
 			Intent intent1 = new Intent(context, ServicioBusquedaTerremotos.class);
 			context.startService(intent1);
-		
+		}
 		
 	}
 
