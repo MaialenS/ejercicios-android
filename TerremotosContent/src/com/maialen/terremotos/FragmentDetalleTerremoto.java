@@ -6,6 +6,7 @@ import java.util.Date;
 
 import com.maialen.datos.TerremotosContentProvider;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentUris;
@@ -20,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
@@ -30,6 +32,7 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 
 	private static final String TAG = "Terremotos";
 	private static final int LOADER_DETALLE = 2;
+	private static final String LA_URL ="la_url";
 	
 	private long id_terremoto;
 	
@@ -41,7 +44,22 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	private TextView fecha;
 	private TextView latitud;
 	private TextView longitud;
+	
+	private Button btnMostrarUrl;
 
+	
+	View.OnClickListener clickMostarUrl = new View.OnClickListener() {
+		public void onClick(View v) {
+			//poner datos en la respuesta cuando es ok
+			
+	    	Intent intent= new Intent(getActivity(), MostrarURL.class);	    	
+	    	//pasar los datos al intent
+	    	intent.putExtra(LA_URL, stringURL);
+	    	
+			startActivity(intent);
+	        	
+	    }
+	};
 	
 	
 	
@@ -55,6 +73,7 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 		//obtener el identificador el terremoto
 		Intent intent = getActivity().getIntent();
 	    //comprobar si esta por si se ha girado o fallado algo o por si viene de otro lugar
+		id_terremoto=0;
 	    if (intent!=null){
 		  
 		    id_terremoto=intent.getLongExtra(FragmentListaTerremotos.TERREMOTO_SELECCIONADO, 0);
@@ -68,7 +87,10 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	    latitud= (TextView) v.findViewById(R.id.textDetalleLatitud);
 	    longitud= (TextView) v.findViewById(R.id.textDetalleLongitud);
 
-
+	    btnMostrarUrl = (Button) v.findViewById(R.id.btnDetalleUrl);
+	    btnMostrarUrl.setOnClickListener(clickMostarUrl);
+	    
+	    
 		return v;
 	};
 	

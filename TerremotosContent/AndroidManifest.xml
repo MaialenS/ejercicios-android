@@ -38,12 +38,15 @@
             android:name="com.maialen.terremotos.DetalleTerremoto"
             android:label="@string/title_activity_detalle_terremoto" >
         </activity>
-        
-        <service 
-            android:enabled="true" 
+
+        <service
             android:name="com.maialen.servicios.ServicioBusquedaTerremotos"
-         />
-        
+            android:enabled="true" />
+
+        <activity
+            android:name="com.maialen.terremotos.MostrarURL"
+            android:label="@string/title_activity_mostrar_url" >
+        </activity>
     </application>
 
 </manifest>
