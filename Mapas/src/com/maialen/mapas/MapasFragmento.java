@@ -130,9 +130,16 @@ public class MapasFragmento extends Fragment{
 		
 		locationManager.requestLocationUpdates(bestProvider, t, distance, locListener);
 
-		ponerUltimaPosicionConocida();
+		
 		ponerBroadcastLocalizacion();
 		return v;
+	}
+	
+	@Override
+	public void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		ponerUltimaPosicionConocida();
 	}
 	
 	private void ponerUltimaPosicionConocida(){
