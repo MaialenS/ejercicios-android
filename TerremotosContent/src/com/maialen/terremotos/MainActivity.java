@@ -35,8 +35,10 @@ public class MainActivity extends Activity {
 		//cargar los fragmentos
 		if (savedInstanceState == null) {
 			
-			getFragmentManager().beginTransaction()
-					.add(R.id.container, new FragmentListaTerremotos(), "list").commit();
+			getFragmentManager().beginTransaction().add(R.id.container, new FragmentListaTerremotos(), "list").commit();
+			
+			
+			
 		}
 		
 		//comprobar si es la primera vez que se ejecuta la aplicacion
