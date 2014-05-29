@@ -1,10 +1,12 @@
 package com.maialen.terremotos;
 
+import com.maialen.preferencias.PreferenciasActivity;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -41,13 +43,26 @@ public class DetalleTerremoto extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent i = new Intent(this, PreferenciasActivity.class);
+			startActivity(i);
+			
 			return true;
 		}else if(id== android.R.id.home){
 	    	
 	    	 Log.d(TAG, "volver");
 	    	 super.onBackPressed();
 	         return true;
+	    }else if(id== R.id.action_share){
+	    	
+	    	 Log.d(TAG, "SHARE");
+	    	 
+	    	 ((FragmentDetalleTerremoto)(getFragmentManager().findFragmentById(R.id.container))).compartirUrl();
+	    	 
+	         return true;
 	    }
+		
+		
+		
 		return super.onOptionsItemSelected(item);
 	}
 

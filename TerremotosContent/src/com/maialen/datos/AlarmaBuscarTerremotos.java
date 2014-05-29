@@ -18,10 +18,10 @@ public class AlarmaBuscarTerremotos extends BroadcastReceiver{
 		String action = intent.getAction();
 		
 		
-		if (action.equals("android.intent.action.PHONE_STATE")){
+		if (action.equals(ACTION)){
 
-			Intent intent1 = new Intent(context, ServicioBusquedaTerremotos.class);
-			context.startService(intent1);
+			Intent intentServicio = new Intent(context, ServicioBusquedaTerremotos.class);
+			context.startService(intentServicio);
 		}
 		
 	}

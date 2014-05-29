@@ -180,6 +180,20 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 		
 	}
 
+	////////////REDES SOCIALES/////////////
+	
+	public void compartirUrl(){
+		
+		Log.d(TAG, "CLICK en compartir");
+		
+		Intent share = new Intent(Intent.ACTION_SEND);
+		share.setType("text/plain");
+		share.putExtra(Intent.EXTRA_TEXT, stringURL);
+		startActivity(Intent.createChooser(share, "prueba de share"));
+		
+	}
+	
+	
 	
 
 }

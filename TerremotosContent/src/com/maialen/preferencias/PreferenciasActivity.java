@@ -19,6 +19,7 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 	public static final String KEY_PREF_INTERVALOS = "INTERVALOS";
 	public static final String KEY_PREF_MAGNITUD = "MAGNITUD";
 	public static final int PONER_AUTOREFRESH= 22;
+
 	
 	private SharedPreferences prefs;
 	
@@ -38,6 +39,8 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 		
 		
 		prefs.registerOnSharedPreferenceChangeListener(this);
+		
+		
 	}  
 	
 	@Override
@@ -52,13 +55,13 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 			 
 			 ponerQuitarAlarmaRefresh();
 			 
-			 
-			 
 		 }else if(key.equals(KEY_PREF_INTERVALOS)){
 
 			 String intervalo = prefs.getString(PreferenciasActivity.KEY_PREF_INTERVALOS, "default");
 			 
 			 Log.d(TAG, "Se ha cambiado el intervalo-->"+intervalo);
+			 
+			 ponerQuitarAlarmaRefresh();
 			 
 		 }else if(key.equals(KEY_PREF_MAGNITUD)){
 
@@ -73,15 +76,21 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 		
 	}
 	
+
+	
+	
+	
 	private void ponerQuitarAlarmaRefresh(){
 		
 		
 		
 		boolean autorefresh = prefs.getBoolean(PreferenciasActivity.KEY_PREF_ACTUALIZAR, false);
-		String intervaloS = prefs.getString(PreferenciasActivity.KEY_PREF_INTERVALOS, "default");
+		
+		String intervaloS = prefs.getString(PreferenciasActivity.KEY_PREF_INTERVALOS, "0");
 		long intervalo= Long.valueOf(intervaloS)*60*1000;//tiempo en minutos*segundos*milisegundos
 		
-		intervalo=1000;//para las pruebas
+		
+		//intervalo=1000;//para las pruebas
 		
 		
 		//obtener el manejador de alarmas
@@ -98,7 +107,7 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 		
 		
 		if(autorefresh){//poner la alarma
-			Log.d(TAG,"poniedno alarma");
+			Log.d(TAG,"poniedno/modificando alarma");
 		    //ponerla de forma que se ejecute ahora y en el intervalo
 		    
 		    alarmManager.setInexactRepeating(alarmType,
@@ -114,7 +123,5 @@ public class PreferenciasActivity extends Activity implements OnSharedPreference
 		
 		
 	}
-	
-	
-	
+
 }

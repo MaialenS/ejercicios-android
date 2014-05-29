@@ -64,7 +64,7 @@ public class DescargarTerremotos {
 
 			JSONArray arrayTerremotos = json.getJSONArray("features");
 
-			Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
+			//Log.d(TAG, "cantidad terremotos->"+arrayTerremotos.length());
 
 			for (int i = 0; i < arrayTerremotos.length(); i++) {
 				JSONObject eq = arrayTerremotos.getJSONObject(i);
