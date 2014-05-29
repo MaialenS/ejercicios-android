@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Mapas</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="Latitud">Latitud</string>
+    <string name="Longitud">Longitud</string>
+    <string name="Altura">Altura</string>
+    
+    <string name="Refrescar">Refrescar</string>
+    
+    
+</resources>

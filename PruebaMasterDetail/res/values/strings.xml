@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PruebaMasterDetail</string>
+    <string name="title_libro_detail">Libro Detail</string>
+
+</resources>
