@@ -29,9 +29,9 @@ public class TerremotosContentProvider extends ContentProvider {
 
 	static {
 		uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-		uriMatcher.addURI("com.maialen.preferencias.PreferenciasActivity",
+		uriMatcher.addURI("com.maialen.provider.terremotoscontentprovider",
 				"elements", ALLROWS);
-		uriMatcher.addURI("com.maialen.preferencias.PreferenciasActivity",
+		uriMatcher.addURI("com.maialen.provider.terremotoscontentprovider",
 				"elements/#", SINGLE_ROW);
 	}
 

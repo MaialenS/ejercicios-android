@@ -48,7 +48,7 @@ public class MainActivity extends Activity {
 		tabOne.setTabListener( new TabListener (this, R.id.container, FragmentListaTerremotos.class));
 		
 		tabTwo.setIcon(R.drawable.ic_action_map);
-		tabTwo.setTabListener( new TabListener (this, R.id.container, FragmentListaTerremotos.class));
+		tabTwo.setTabListener( new TabListener (this, R.id.container, MapaFragmento.class));
 		
 		actionBar.addTab(tabOne);
 		actionBar.addTab(tabTwo);

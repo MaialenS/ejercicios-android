@@ -128,6 +128,8 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 		
 		Uri uri=ContentUris.withAppendedId(TerremotosContentProvider.CONTENT_URI,id_terremoto );
 		
+		Log.d(TAG, "uri: "+uri);
+		
 		CursorLoader loader = new CursorLoader(getActivity(),
 				uri, TerremotosContentProvider.ALL_COLUMS, null, null, null);
 		return loader;
@@ -138,7 +140,7 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	@Override
 	public void onLoadFinished(Loader<Cursor> arg0, Cursor cursor) {
 		// TODO Auto-generated method stub
-	
+		Log.d(TAG, "vuelve uri: ");
 		if(cursor.moveToFirst()){
 			//coger los datos
 			String magnitudS = cursor.getString(cursor
