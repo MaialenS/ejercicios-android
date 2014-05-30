@@ -120,4 +120,11 @@
 
     </RelativeLayout>
 
+    <fragment
+        android:id="@+id/mapaDetalle"
+        android:name="com.maialen.terremotos.MapaFragmentoDetalle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp" />
+
 </LinearLayout>

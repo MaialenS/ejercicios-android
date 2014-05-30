@@ -4,6 +4,7 @@ package com.maialen.terremotos;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.maialen.datos.TerremotosContentProvider;
 
 import android.app.Activity;
@@ -37,7 +38,7 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	private long id_terremoto;
 	
 	private String stringURL;
-	
+	private MapaFragmentoDetalle mapa;
 	
 	private TextView lugar;
 	private TextView magnitud;
@@ -90,7 +91,7 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 	    btnMostrarUrl = (Button) v.findViewById(R.id.btnDetalleUrl);
 	    btnMostrarUrl.setOnClickListener(clickMostarUrl);
 	    
-	    
+
 		return v;
 	};
 	
@@ -156,9 +157,9 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 			stringURL= cursor.getString(cursor
 					.getColumnIndex(TerremotosContentProvider.URL_COLUMN));
 			
-			String lat = cursor.getString(cursor
+			Long lat = cursor.getLong(cursor
 					.getColumnIndex(TerremotosContentProvider.LAT_COLUMN));
-			String lon = cursor.getString(cursor
+			Long lon = cursor.getLong(cursor
 					.getColumnIndex(TerremotosContentProvider.LON_COLUMN));
 			
 			//pintar los datos
@@ -166,8 +167,14 @@ public class FragmentDetalleTerremoto extends Fragment implements LoaderCallback
 			lugar.setText(lugarS);
 			magnitud.setText(magnitudS);
 			fecha.setText(fechaFormateada);
-			latitud.setText(lat);
-			longitud.setText(lon);
+			latitud.setText(String.valueOf(lat));
+			longitud.setText(String.valueOf(lon));
+			
+			LatLng posicion=new LatLng(lat, lon);
+			//poner la localizacion en el mapa
+			((MapaFragmentoDetalle)(getFragmentManager().findFragmentById(R.id.mapaDetalle))).ponerMarca(posicion);
+			
+			
 	
 			Log.d(TAG, "url->"+stringURL);
 		}

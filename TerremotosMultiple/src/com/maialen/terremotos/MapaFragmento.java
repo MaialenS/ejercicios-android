@@ -100,6 +100,7 @@ public class MapaFragmento extends com.google.android.gms.maps.MapFragment imple
 		mapa.clear();
 		LatLng PERTH;
 		Marker marca;
+		int i=0;
 		if (cursor.moveToFirst()) {
 		    do {
 		    	Long lat = cursor.getLong(cursor
@@ -119,8 +120,8 @@ public class MapaFragmento extends com.google.android.gms.maps.MapFragment imple
 		    	
 				 relacionMarcasTerremotos.put(marca, idTerremoto);
 				 mapa.animateCamera(CameraUpdateFactory.newLatLng(PERTH));
-		    	
-		    } while (cursor.moveToNext());
+		    	i++;
+		    } while (cursor.moveToNext() &&i<20);
 		}
 		
 		
