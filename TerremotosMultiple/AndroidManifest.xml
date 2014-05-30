@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.maialen.terremotos"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.maialen.terremotos.MainActivity"
+            android:label="@string/app_name"
+            android:uiOptions="splitActionBarWhenNarrow" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.maialen.preferencias.PreferenciasActivity"
+            android:label="@string/title_activity_preferencias" >
+        </activity>
+
+        <provider
+            android:name="com.maialen.datos.TerremotosContentProvider"
+            android:authorities="com.maialen.provider.terremotoscontentprovider"
+            android:exported="false" />
+
+        <activity
+            android:name="com.maialen.terremotos.DetalleTerremoto"
+            android:label="@string/title_activity_detalle_terremoto" >
+        </activity>
+
+        <service
+            android:name="com.maialen.servicios.ServicioBusquedaTerremotos"
+            android:enabled="true" />
+
+        <activity
+            android:name="com.maialen.terremotos.MostrarURL"
+            android:label="@string/title_activity_mostrar_url"
+            android:parentActivityName="com.maialen.terremotos.DetalleTerremoto" >
+        </activity>
+
+        <receiver android:name="com.maialen.datos.AlarmaBuscarTerremotos" >
+            <intent-filter>
+                <action android:name="com.maialen.ACTION_EARTHQUAKE_ALARM" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.maialen.terremotos.MapaActivity"
+            android:label="@string/title_activity_mapa" >
+        </activity>
+    </application>
+
+</manifest>

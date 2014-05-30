@@ -5,7 +5,6 @@ package com.maialen.mapas;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -28,7 +27,7 @@ public class MapasFragmento extends Fragment{
 	
 	TextView textLat, textLon, textAltura;
 	ListView listaPosiciones;
-	Button refrescar;
+	Button refrescar, verMapa;
 	
 	
 	
@@ -49,7 +48,14 @@ public class MapasFragmento extends Fragment{
 	        	
 	    }
 	};
-	
+	View.OnClickListener mapaClick = new View.OnClickListener() {
+		public void onClick(View v) {
+			
+			Intent i = new Intent(getActivity(), MapaActivity.class);
+			startActivity(i);
+	        	
+	    }
+	};
 	
 	LocationListener locListener = new LocationListener() {
 		
@@ -100,9 +106,11 @@ public class MapasFragmento extends Fragment{
 		textAltura= (TextView) v.findViewById(R.id.textAlt);
 		listaPosiciones= (ListView) v.findViewById(R.id.listaPosiciones);
 		refrescar = (Button) v.findViewById(R.id.btnRefrescar);
-		
+		verMapa = (Button) v.findViewById(R.id.btnMapa);
 		refrescar.setOnClickListener(refrescarClick);
-
+		verMapa.setOnClickListener(mapaClick);
+		
+		
 		listaLugares= new ArrayList<String>();
 		
 

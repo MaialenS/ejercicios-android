@@ -8,6 +8,7 @@
     <string name="Longitud">Longitud</string>
     <string name="Altura">Altura</string>
     <string name="Refrescar">Refrescar</string>
+    <string name="Ver_mapa">Ver Mapa</string>
     <string name="title_activity_mapa">MapaActivity</string>
 
 </resources>
